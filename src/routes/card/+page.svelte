@@ -1,4 +1,5 @@
 <script>
+    import { base } from "$app/paths";
     import cardData from "$lib/assets/card_data.json";
 </script>
 <main class="grow p-2.5">
@@ -29,7 +30,7 @@
                 <div class="text-left">{card.music}</div>
                 <div class="text-left">{card.category1} / {card.category2}</div>
                 <div class="grid grid-cols-2 pt-2">
-                    <div><img src="/img/card/{card.id}_O_150.webp" alt="" class="size-full p-1"></div>
+                    <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full p-1"></div>
                     <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                         <button class="w-full bg-[#eee]">+</button>
                         <input type="text" class="w-full" disabled>
