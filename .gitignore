@@ -24,11 +24,8 @@ vite.config.ts.timestamp-*
 
 # Other
 /src/routes/components/test.svelte
-/src/lib/assets/coordinate_data.json
-/src/lib/assets/item_data.json
 /src/lib/assets/music_data.json
 /src/lib/assets/parts_data.json
 /src/lib/assets/unlisted_coordinate_data.json
 /python/
-/static/img/item/
 /static/img/parts/
