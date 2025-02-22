@@ -1,5 +1,6 @@
 <script>
     import { base } from "$app/paths";
+    import { toCategory1String } from "$lib";
     import itemData from "$lib/assets/item_data.json";
     import coordinateData from "$lib/assets/coordinate_data.json";
 </script>
@@ -9,7 +10,7 @@
             <div class="coordinateDiv relative m-2 p-2.5 rounded-2xl bg-white text-center">
                 <div class="text-right">{coordinate.brandName}</div>
                 <div class="text-xl">{coordinate.coordinateName}</div>
-                <div class="text-left">{coordinate.category1} / {coordinate.category2}</div>
+                <div class="text-left">{toCategory1String(coordinate.category1)} / {coordinate.category2}</div>
                 <div class="grid grid-cols-2 pt-2">
                     {#if coordinate["one-piece"] != ""}
                         <div>

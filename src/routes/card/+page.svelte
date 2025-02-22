@@ -1,5 +1,6 @@
 <script>
     import { base } from "$app/paths";
+    import { toCategory1String } from "$lib";
     import cardData from "$lib/assets/card_data.json";
 </script>
 <main class="grow p-2.5">
@@ -34,7 +35,7 @@
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
                 <div class="text-left">{card.music}</div>
-                <div class="text-left">{card.category1} / {card.category2}</div>
+                <div class="text-left">{toCategory1String(card.category1)} / {card.category2}</div>
                 <div class="grid grid-cols-2 pt-2">
                     <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full p-1"></div>
                     <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
