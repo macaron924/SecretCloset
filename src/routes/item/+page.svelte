@@ -1,12 +1,78 @@
 <script>
     import { base } from "$app/paths";
-    import { toCategory1String } from "$lib";
+    import { SvelteSet } from "svelte/reactivity";
+    import { brandList, toCategory1String } from "$lib";
     import itemData from "$lib/assets/item_data.json";
     import coordinateData from "$lib/assets/coordinate_data.json";
+    let coordinateDataShow = $state(coordinateData)
+    let filterSets = $state({
+        rarities: new SvelteSet(),
+        brands: new SvelteSet(),
+    });
+    let isOpenFilterRarity = $state(false);
+    let isOpenFilterBrand = $state(false);
+    function filter() {
+        return coordinateData.filter(coordinate => {
+            return (filterSets.rarities.size === 0 || filterSets.rarities.has(coordinate.rarity))
+            && (filterSets.brands.size === 0 || filterSets.brands.has(coordinate.brandName))
+        })
+    }
 </script>
 <main class="grow p-2.5">
+    <div class="grid grid-cols-1 md:grid-cols-2">
+        <div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterRarity = !isOpenFilterRarity;
+                    }}
+                >{isOpenFilterRarity ? "▲" : "▼"} レアリティ選択</button>
+                {#if isOpenFilterRarity}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each [{str: "★★★★", num: 4}, {str: "★★★", num: 3}, {str: "★★", num: 2}, {str: "スペシャル", num: 0}] as rarity}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.rarities.has(rarity.num)
+                                }}
+                                onclick="{() => {
+                                    filterSets.rarities.has(rarity.num) ? filterSets.rarities.delete(rarity.num) : filterSets.rarities.add(rarity.num);
+                                    coordinateDataShow = filter();
+                                }}"
+                                >{rarity.str}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+        </div>
+        <div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterBrand = !isOpenFilterBrand;
+                    }}
+                >{isOpenFilterBrand ? "▲" : "▼"} ブランド選択</button>
+                {#if isOpenFilterBrand}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each brandList as brand}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.brands.has(brand)
+                                }}
+                                onclick="{() => {
+                                    filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
+                                    coordinateDataShow = filter();
+                                }}"
+                            >{brand}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </div>
     <div id="list" class="grid grid-cols-2 md:grid-cols-4 items-start">
-        {#each coordinateData as coordinate (coordinate.tmpId)}
+        {#each coordinateDataShow as coordinate (coordinate.tmpId)}
             <div class="coordinateDiv relative m-2 p-2.5 rounded-2xl bg-white text-center">
                 <div class="text-right">{coordinate.brandName}</div>
                 <div class="text-xl">{coordinate.coordinateName}</div>

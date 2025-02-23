@@ -38,7 +38,7 @@
                 >{isOpenFilterChance ? "▲" : "▼"} チャンスマーク有無選択</button>
                 {#if isOpenFilterChance}
                     <div class="flex flex-wrap justify-start content-start">
-                        {#each [{"str": "あり", "tf": true}, {"str": "なし", "tf": false}] as chance}
+                        {#each [{str: "あり", tf: true}, {str: "なし", tf: false}] as chance}
                             <button
                                 class={{
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
