@@ -1,17 +1,162 @@
 <script>
     import { base } from "$app/paths";
-    import { toCategory1String } from "$lib";
+    import { SvelteSet } from "svelte/reactivity";
+    import { brandList, characterList, toCategory1String } from "$lib";
     import cardData from "$lib/assets/card_data.json";
+    import musicData from "$lib/assets/music_data.json";
+    let cardDataShow = $state(cardData)
+    let filterSets = $state({
+        chance: new SvelteSet(),
+        types: new SvelteSet(),
+        characters: new SvelteSet(),
+        brands: new SvelteSet(),
+        musics: new SvelteSet()
+    });
+    let isOpenFilterChance = $state(false);
+    let isOpenFilterType = $state(false);
+    let isOpenFilterCharacter = $state(false);
+    let isOpenFilterBrand = $state(false);
+    let isOpenFilterMusic = $state(false);
+    function filter() {
+        return cardData.filter(card => {
+            return (filterSets.chance.size === 0 || filterSets.chance.has(card.chance))
+            && (filterSets.types.size === 0 || filterSets.types.has(card.type))
+            && (filterSets.characters.size === 0 || filterSets.characters.has(card.character))
+            && (filterSets.brands.size === 0 || filterSets.brands.has(card.brandName))
+            && (filterSets.musics.size === 0 || filterSets.musics.has(card.music))
+        })
+    }
 </script>
 <main class="grow p-2.5">
-    <div id="list" class="grid grid-cols-2 md:grid-cols-4 items-start">
-        {#each cardData as card (card.id)}
+    <div class="grid grid-cols-1 md:grid-cols-2">
+        <div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterChance = !isOpenFilterChance;
+                    }}
+                >{isOpenFilterChance ? "▲" : "▼"} チャンスマーク有無選択</button>
+                {#if isOpenFilterChance}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each [{"str": "あり", "tf": true}, {"str": "なし", "tf": false}] as chance}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.chance.has(chance.tf)
+                                }}
+                                onclick="{() => {
+                                    filterSets.chance.has(chance.tf) ? filterSets.chance.delete(chance.tf) : filterSets.chance.add(chance.tf);
+                                    cardDataShow = filter();
+                                }}"
+                            >{chance.str}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterType = !isOpenFilterType;
+                    }}
+                >{isOpenFilterType ? "▲" : "▼"} タイプ選択</button>
+                {#if isOpenFilterType}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each ["ダンス", "うた", "ファッション"] as type}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.types.has(type)
+                                }}
+                                onclick="{() => {
+                                    filterSets.types.has(type) ? filterSets.types.delete(type) : filterSets.types.add(type);
+                                    cardDataShow = filter();
+                                }}"
+                            >{type}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterCharacter = !isOpenFilterCharacter;
+                    }}
+                >{isOpenFilterCharacter ? "▲" : "▼"} キャラクター選択</button>
+                {#if isOpenFilterCharacter}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each characterList as character}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.characters.has(character)
+                                }}
+                                onclick="{() => {
+                                    filterSets.characters.has(character) ? filterSets.characters.delete(character) : filterSets.characters.add(character);
+                                    cardDataShow = filter();
+                                }}"
+                            >{character}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterBrand = !isOpenFilterBrand;
+                    }}
+                >{isOpenFilterBrand ? "▲" : "▼"} ブランド選択</button>
+                {#if isOpenFilterBrand}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each brandList as brand}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.brands.has(brand)
+                                }}
+                                onclick="{() => {
+                                    filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
+                                    cardDataShow = filter();
+                                }}"
+                            >{brand}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+        </div>
+        <div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterMusic = !isOpenFilterMusic;
+                    }}
+                >{isOpenFilterMusic ? "▲" : "▼"} 遊べる曲選択</button>
+                {#if isOpenFilterMusic}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each Object.keys(musicData) as music}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.musics.has(music)
+                                }}
+                                onclick="{() => {
+                                    filterSets.musics.has(music) ? filterSets.musics.delete(music) : filterSets.musics.add(music);
+                                    cardDataShow = filter();
+                                }}"
+                                >{music}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+    <div id="list" class="mt-5 grid grid-cols-2 md:grid-cols-4 items-start">
+        {#each cardDataShow as card (card.id)}
             <div
                 class={{
                     "relative overflow-hidden m-1.5 p-2.5 border-3 border-[#ccc] rounded-2xl bg-white text-center": true,
-                        "!border-[#ed86a7]": card.type === "ダンス",
-                        "!border-[#68caf2]": card.type === "うた",
-                        "!border-[#ffe467]": card.type === "ファッション"
+                    "!border-[#ed86a7]": card.type === "ダンス",
+                    "!border-[#68caf2]": card.type === "うた",
+                    "!border-[#ffe467]": card.type === "ファッション"
                 }}
             >
                 <div
@@ -30,7 +175,7 @@
                         "!bg-[#ffe467]": card.type === "ファッション"
                     }}
                 ></div>
-                <div class="pl-2.5 text-left">{card.id}</div>
+                <div class="pl-2.5 text-left">{card.idSP === null ? card.id : `${card.idSP} (${card.id})`}</div>
                 <div class="text-right">{card.brandName}</div>
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
