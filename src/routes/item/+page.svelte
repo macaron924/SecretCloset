@@ -17,6 +17,29 @@
             && (filterSets.brands.size === 0 || filterSets.brands.has(coordinate.brandName))
         })
     }
+    /**
+     * 排出時印字ID取得
+     * @param {string} targetId
+     */
+    function getPrintedId(targetId) {
+        const retsult = itemData.find(({ imageId }) => imageId == targetId);
+        if (retsult != undefined) return retsult.id;
+        return null;
+    }
+    /**
+     * 再録かどうか
+     * @param {string} targetId
+     * @param {string} category1
+     * @param {string} category2
+     */
+    function isSameCategory(targetId, category1, category2) {
+        const retsult = itemData.find(({ imageId }) => imageId == targetId);
+        if (retsult != undefined) {
+            if (retsult.category1 === category1 && retsult.category2 === category2) return true;
+            return false;
+        }
+        return false;
+    }
 </script>
 <main class="grow p-2.5">
     <div class="grid grid-cols-1 md:grid-cols-2">
@@ -79,54 +102,149 @@
                 <div class="text-left">{toCategory1String(coordinate.category1)} / {coordinate.category2}</div>
                 <div class="grid grid-cols-2 pt-2">
                     {#if coordinate["one-piece"] != ""}
+                    {@const grayout = (coordinate["one-piece"].split(" ").length > 1)}
+                    {@const imageId = coordinate["one-piece"].split(" ")[0]}
+                    {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{coordinate["one-piece"].split(" ")[0]}_150.webp" alt="" class="size-full p-1"></div>
+                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            {#if printedId != null}
+                                <div>{printedId}</div>
+                            {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
-                                <input type="text" class="w-full" disabled>
+                                <input type="text"
+                                    class={{
+                                        "w-full": true,
+                                        "bg-[#ccc]": grayout
+                                    }}
+                                    disabled
+                                >
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
+                            {#if grayout}
+                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
+                                    <div>※共通</div>
+                                {:else}
+                                    <div>※再録</div>
+                                {/if}
+                            {/if}
                         </div>
                         <div></div>
                     {/if}
                     {#if coordinate.tops != ""}
+                    {@const grayout = (coordinate.tops.split(" ").length > 1)}
+                    {@const imageId = coordinate.tops.split(" ")[0]}
+                    {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{coordinate.tops.split(" ")[0]}_150.webp" alt="" class="size-full p-1"></div>
+                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            {#if printedId != null}
+                                <div>{printedId}</div>
+                            {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
-                                <input type="text" class="w-full" disabled>
+                                <input type="text"
+                                    class={{
+                                        "w-full": true,
+                                        "bg-[#ccc]": grayout
+                                    }}
+                                    disabled
+                                >
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
+                            {#if grayout}
+                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
+                                    <div>※共通</div>
+                                {:else}
+                                    <div>※再録</div>
+                                {/if}
+                            {/if}
                         </div>
                     {/if}
                     {#if coordinate.bottoms != ""}
+                    {@const grayout = (coordinate.bottoms.split(" ").length > 1)}
+                    {@const imageId = coordinate.bottoms.split(" ")[0]}
+                    {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{coordinate.bottoms.split(" ")[0]}_150.webp" alt="" class="size-full p-1"></div>
+                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            {#if printedId != null}
+                                <div>{printedId}</div>
+                            {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
-                                <input type="text" class="w-full" disabled>
+                                <input type="text"
+                                    class={{
+                                        "w-full": true,
+                                        "bg-[#ccc]": grayout
+                                    }}
+                                    disabled
+                                >
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
+                            {#if grayout}
+                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
+                                    <div>※共通</div>
+                                {:else}
+                                    <div>※再録</div>
+                                {/if}
+                            {/if}
                         </div>
                     {/if}
                     {#if coordinate.shoes != ""}
+                    {@const grayout = (coordinate.shoes.split(" ").length > 1)}
+                    {@const imageId = coordinate.shoes.split(" ")[0]}
+                    {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{coordinate.shoes.split(" ")[0]}_150.webp" alt="" class="size-full p-1"></div>
+                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            {#if printedId != null}
+                                <div>{printedId}</div>
+                            {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
-                                <input type="text" class="w-full" disabled>
+                                <input type="text"
+                                    class={{
+                                        "w-full": true,
+                                        "bg-[#ccc]": grayout
+                                    }}
+                                    disabled
+                                >
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
+                            {#if grayout}
+                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
+                                    <div>※共通</div>
+                                {:else}
+                                    <div>※再録</div>
+                                {/if}
+                            {/if}
                         </div>
                     {/if}
                     {#if coordinate.accessory != ""}
+                    {@const grayout = (coordinate.accessory.split(" ").length > 1)}
+                    {@const imageId = coordinate.accessory.split(" ")[0]}
+                    {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{coordinate.accessory.split(" ")[0]}_150.webp" alt="" class="size-full p-1"></div>
+                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            {#if printedId != null}
+                                <div>{printedId}</div>
+                            {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
-                                <input type="text" class="w-full" disabled>
+                                <input type="text"
+                                    class={{
+                                        "w-full": true,
+                                        "bg-[#ccc]": grayout
+                                    }}
+                                    disabled
+                                >
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
+                            {#if grayout}
+                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
+                                    <div>※共通</div>
+                                {:else}
+                                    <div>※再録</div>
+                                {/if}
+                            {/if}
                         </div>
                     {/if}
                 </div>

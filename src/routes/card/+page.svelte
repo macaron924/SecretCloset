@@ -175,7 +175,7 @@
                         "!bg-[#ffe467]": card.type === "ファッション"
                     }}
                 ></div>
-                <div class="pl-2.5 text-left">{card.idSP === null ? card.id : `${card.idSP} (${card.id})`}</div>
+                <div class="pl-2.5 text-left">{card.idSP === null ? card.id : card.idSP}</div>
                 <div class="text-right">{card.brandName}</div>
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
