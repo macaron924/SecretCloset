@@ -9,8 +9,13 @@
      * @type {boolean[]}
      */
     let isOpenCategory = $state([]);
+    /**
+     * @type {number[]}
+     */
+    let selectedCategoryNum = $state([]);
     for (let i = 0; i<cardCategoryList.length; i++) {
         isOpenCategory.push(false);
+        selectedCategoryNum.push(0)
     }
 
     let cardDataShow = $state(cardData);
@@ -52,12 +57,26 @@
                     <div>
                         {#each cardCategoryList as url, index}
                             <div>
-                                <span
+                                <button
                                     class={{
-                                        "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] bg-white": true,
-                                        "!bg-[#ffff00]": false
+                                        "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                        "!bg-[#ffff00]": selectedCategoryNum[index] > 0
                                     }}
-                                >{toUrlString(url.url)}</span>
+                                    onclick="{() => {
+                                        if (selectedCategoryNum[index] == url.categories.length) {
+                                            url.categories.forEach((category) =>{
+                                                filterSets.categories.delete(`${url.url}/${category}`);
+                                            })
+                                            selectedCategoryNum[index] = 0;
+                                        } else {
+                                            url.categories.forEach((category) =>{
+                                                filterSets.categories.add(`${url.url}/${category}`);
+                                            })
+                                            selectedCategoryNum[index] = url.categories.length;
+                                        }
+                                        cardDataShow = filter();
+                                    }}"
+                                >{toUrlString(url.url)} <span class="text-gray-400">({selectedCategoryNum[index]}/{url.categories.length})</span></button>
                                 <button
                                     aria-label="カテゴリー開閉"
                                     value="{index}"
@@ -85,7 +104,14 @@
                                                     "!bg-[#ffff00]": filterSets.categories.has(value)
                                                 }}
                                                 onclick="{() => {
-                                                    filterSets.categories.has(value) ? filterSets.categories.delete(value) : filterSets.categories.add(value);
+                                                    if (filterSets.categories.has(value)) {
+                                                        filterSets.categories.delete(value);
+                                                        selectedCategoryNum[index]--;
+                                                    } else {
+                                                        filterSets.categories.add(value);
+                                                        selectedCategoryNum[index]++;
+                                                    }
+                                                    //filterSets.categories.has(value) ? filterSets.categories.delete(value) : filterSets.categories.add(value);
                                                     cardDataShow = filter();
                                                 }}"
                                             >{category}</button>
