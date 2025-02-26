@@ -1,17 +1,28 @@
 <script>
     import { base } from "$app/paths";
     import { SvelteSet } from "svelte/reactivity";
-    import { brandList, characterList, toCategory1String } from "$lib";
+    import { brandList, cardCategoryList, characterList, toUrlString } from "$lib";
     import cardData from "$lib/assets/card_data.json";
     import musicData from "$lib/assets/music_data.json";
-    let cardDataShow = $state(cardData)
+
+    /**
+     * @type {boolean[]}
+     */
+    let isOpenCategory = $state([]);
+    for (let i = 0; i<cardCategoryList.length; i++) {
+        isOpenCategory.push(false);
+    }
+
+    let cardDataShow = $state(cardData);
     let filterSets = $state({
+        categories: new SvelteSet(),
         chance: new SvelteSet(),
         types: new SvelteSet(),
         characters: new SvelteSet(),
         brands: new SvelteSet(),
         musics: new SvelteSet()
     });
+    let isOpenFilterCategory = $state(false);
     let isOpenFilterChance = $state(false);
     let isOpenFilterType = $state(false);
     let isOpenFilterCharacter = $state(false);
@@ -19,7 +30,8 @@
     let isOpenFilterMusic = $state(false);
     function filter() {
         return cardData.filter(card => {
-            return (filterSets.chance.size === 0 || filterSets.chance.has(card.chance))
+            return (filterSets.categories.size === 0 || filterSets.categories.has(card.connectedCategory))
+            && (filterSets.chance.size === 0 || filterSets.chance.has(card.chance))
             && (filterSets.types.size === 0 || filterSets.types.has(card.type))
             && (filterSets.characters.size === 0 || filterSets.characters.has(card.character))
             && (filterSets.brands.size === 0 || filterSets.brands.has(card.brandName))
@@ -29,6 +41,63 @@
 </script>
 <main class="grow p-2.5">
     <div class="grid grid-cols-1 md:grid-cols-2">
+        <div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterCategory = !isOpenFilterCategory;
+                    }}
+                >{isOpenFilterCategory ? "▲" : "▼"} カテゴリー（だん）選択</button>
+                {#if isOpenFilterCategory}
+                    <div>
+                        {#each cardCategoryList as url, index}
+                            <div>
+                                <span
+                                    class={{
+                                        "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] bg-white": true,
+                                        "!bg-[#ffff00]": false
+                                    }}
+                                >{toUrlString(url.url)}</span>
+                                <button
+                                    aria-label="カテゴリー開閉"
+                                    value="{index}"
+                                    class={{
+                                        "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true
+                                    }}
+                                    onclick="{() => {
+                                        isOpenCategory[index] = !isOpenCategory[index];
+                                    }}"
+                                ><span
+                                    class={{
+                                        "!size-4 align-middle": true,
+                                        "mdi--plus": !isOpenCategory[index],
+                                        "mdi--minus": isOpenCategory[index]
+                                    }}
+                                ></span></button>
+                                {#if isOpenCategory[index]}
+                                    <div class="flex flex-wrap justify-start content-start pl-4">
+                                        {#each url.categories as category}
+                                        {@const value = `${url.url}/${category}`}
+                                            <button
+                                                value="{value}"
+                                                class={{
+                                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                                    "!bg-[#ffff00]": filterSets.categories.has(value)
+                                                }}
+                                                onclick="{() => {
+                                                    filterSets.categories.has(value) ? filterSets.categories.delete(value) : filterSets.categories.add(value);
+                                                    cardDataShow = filter();
+                                                }}"
+                                            >{category}</button>
+                                        {/each}
+                                    </div>
+                                {/if}
+                            </div>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+        </div>
         <div>
             <div>
                 <button
@@ -122,8 +191,6 @@
                     </div>
                 {/if}
             </div>
-        </div>
-        <div>
             <div>
                 <button
                     onclick={() => {
@@ -180,13 +247,13 @@
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
                 <div class="text-left">{card.music}</div>
-                <div class="text-left">{toCategory1String(card.category1)} / {card.category2}</div>
+                <div class="text-left">{toUrlString(card.category1)} / {card.category2}</div>
                 <div class="grid grid-cols-2 pt-2">
                     <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full p-1"></div>
                     <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                        <button class="w-full bg-[#eee]">+</button>
+                        <button aria-label="所持数+1" class="w-full bg-[#eee]"><span class="mdi--plus align-middle"></span></button>
                         <input type="text" class="w-full" disabled>
-                        <button class="w-full bg-[#eee]">-</button>
+                        <button aria-label="所持数-1" class="w-full bg-[#eee]"><span class="mdi--minus align-middle"></span></button>
                     </div>
                 </div>
             </div>
