@@ -15,7 +15,7 @@
     let selectedCategoryNum = $state([]);
     for (let i = 0; i<cardCategoryList.length; i++) {
         isOpenCategory.push(false);
-        selectedCategoryNum.push(0)
+        selectedCategoryNum.push(0);
     }
 
     let cardDataShow = $state(cardData);
@@ -62,7 +62,7 @@
                                         "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                         "!bg-[#ffff00]": selectedCategoryNum[index] > 0
                                     }}
-                                    onclick="{() => {
+                                    onclick={() => {
                                         if (selectedCategoryNum[index] == url.categories.length) {
                                             url.categories.forEach((category) =>{
                                                 filterSets.categories.delete(`${url.url}/${category}`);
@@ -75,7 +75,7 @@
                                             selectedCategoryNum[index] = url.categories.length;
                                         }
                                         cardDataShow = filter();
-                                    }}"
+                                    }}
                                 >{toUrlString(url.url)} <span class="text-gray-400">({selectedCategoryNum[index]}/{url.categories.length})</span></button>
                                 <button
                                     aria-label="カテゴリー開閉"
@@ -83,9 +83,9 @@
                                     class={{
                                         "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true
                                     }}
-                                    onclick="{() => {
+                                    onclick={() => {
                                         isOpenCategory[index] = !isOpenCategory[index];
-                                    }}"
+                                    }}
                                 ><span
                                     class={{
                                         "!size-4 align-middle": true,
@@ -103,7 +103,7 @@
                                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                                     "!bg-[#ffff00]": filterSets.categories.has(value)
                                                 }}
-                                                onclick="{() => {
+                                                onclick={() => {
                                                     if (filterSets.categories.has(value)) {
                                                         filterSets.categories.delete(value);
                                                         selectedCategoryNum[index]--;
@@ -111,9 +111,8 @@
                                                         filterSets.categories.add(value);
                                                         selectedCategoryNum[index]++;
                                                     }
-                                                    //filterSets.categories.has(value) ? filterSets.categories.delete(value) : filterSets.categories.add(value);
                                                     cardDataShow = filter();
-                                                }}"
+                                                }}
                                             >{category}</button>
                                         {/each}
                                     </div>
@@ -139,10 +138,10 @@
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.chance.has(chance.tf)
                                 }}
-                                onclick="{() => {
+                                onclick={() => {
                                     filterSets.chance.has(chance.tf) ? filterSets.chance.delete(chance.tf) : filterSets.chance.add(chance.tf);
                                     cardDataShow = filter();
-                                }}"
+                                }}
                             >{chance.str}</button>
                         {/each}
                     </div>
@@ -162,10 +161,10 @@
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.types.has(type)
                                 }}
-                                onclick="{() => {
+                                onclick={() => {
                                     filterSets.types.has(type) ? filterSets.types.delete(type) : filterSets.types.add(type);
                                     cardDataShow = filter();
-                                }}"
+                                }}
                             >{type}</button>
                         {/each}
                     </div>
@@ -185,10 +184,10 @@
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.characters.has(character)
                                 }}
-                                onclick="{() => {
+                                onclick={() => {
                                     filterSets.characters.has(character) ? filterSets.characters.delete(character) : filterSets.characters.add(character);
                                     cardDataShow = filter();
-                                }}"
+                                }}
                             >{character}</button>
                         {/each}
                     </div>
@@ -208,10 +207,10 @@
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.brands.has(brand)
                                 }}
-                                onclick="{() => {
+                                onclick={() => {
                                     filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
                                     cardDataShow = filter();
-                                }}"
+                                }}
                             >{brand}</button>
                         {/each}
                     </div>
@@ -231,10 +230,10 @@
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.musics.has(music)
                                 }}
-                                onclick="{() => {
+                                onclick={() => {
                                     filterSets.musics.has(music) ? filterSets.musics.delete(music) : filterSets.musics.add(music);
                                     cardDataShow = filter();
-                                }}"
+                                }}
                                 >{music}</button>
                         {/each}
                     </div>
