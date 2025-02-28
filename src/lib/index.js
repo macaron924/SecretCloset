@@ -62,7 +62,8 @@ export const brandList = [
     "ベアベアベア",
     "ラブマイミュージック",
     "プリズムストーン",
-    "クリスタルバース"
+    "クリスタルバース",
+    "プリティーコレクション"
 ];
 export const cardCategoryList = [
     {

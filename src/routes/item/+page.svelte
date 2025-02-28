@@ -173,14 +173,14 @@
                         {#each brandList as brand}
                             <button
                                 class={{
-                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "m-1 px-2 py-1 w-24 border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.brands.has(brand)
                                 }}
                                 onclick={() => {
                                     filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
                                     coordinateDataShow = filter();
                                 }}
-                            >{brand}</button>
+                            ><img src="{base}/img/brand/{brand}.webp" alt="{brand}" title="{brand}" class="w-full h-10 object-cover"></button>
                         {/each}
                     </div>
                 {/if}
@@ -190,7 +190,10 @@
     <div id="list" class="grid grid-cols-2 md:grid-cols-4 items-start">
         {#each coordinateDataShow as coordinate (coordinate.tmpId)}
             <div class="coordinateDiv relative m-2 p-2.5 rounded-2xl bg-white text-center">
-                <div class="text-right">{coordinate.brandName}</div>
+                <div class="flex">
+                    <div class="grow"></div>
+                    <div class="max-w-1/2"><img src="{base}/img/brand/{coordinate.brandName}.webp" alt="{coordinate.brandName}" title="{coordinate.brandName}" class="w-24 max-w-full h-10 object-cover"></div>
+                </div>
                 <div class="text-xl">{coordinate.coordinateName}</div>
                 <div class="text-left">{toUrlString(coordinate.category1)} / {coordinate.category2}</div>
                 <div class="grid grid-cols-2 pt-2">

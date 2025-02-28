@@ -204,14 +204,14 @@
                         {#each brandList as brand}
                             <button
                                 class={{
-                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "m-1 px-2 py-1 w-24 border-3 border-[#fe9bf2] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.brands.has(brand)
                                 }}
                                 onclick={() => {
                                     filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
                                     cardDataShow = filter();
                                 }}
-                            >{brand}</button>
+                            ><img src="{base}/img/brand/{brand}.webp" alt="{brand}" title="{brand}" class="w-full h-10 object-cover"></button>
                         {/each}
                     </div>
                 {/if}
@@ -271,8 +271,10 @@
                         "!bg-[#ffe467]": card.type === "ファッション"
                     }}
                 ></div>
-                <div class="pl-2.5 text-left">{card.idSP === null ? card.id : card.idSP}</div>
-                <div class="text-right">{card.brandName}</div>
+                <div class="flex">
+                    <div class="grow pl-2.5 text-left">{card.idSP === null ? card.id : card.idSP}</div>
+                    <div class="max-w-1/2"><img src="{base}/img/brand/{card.brandName}.webp" alt="{card.brandName}" title="{card.brandName}" class="w-24 max-w-full h-10 object-cover"></div>
+                </div>
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
                 <div class="text-left">{toUrlString(card.category1)} / {card.category2}</div>
