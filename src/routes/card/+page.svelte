@@ -224,17 +224,20 @@
                 >{isOpenFilterMusic ? "▲" : "▼"} 遊べる曲選択</button>
                 {#if isOpenFilterMusic}
                     <div class="flex flex-wrap justify-start content-start">
-                        {#each Object.keys(musicData) as music}
+                        {#each musicData as music}
+                        {@const musicName = music.musicName}
+                        {@const jacketId = music.jacketId}
                             <button
+                                title="{musicName}"
                                 class={{
-                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                    "!bg-[#ffff00]": filterSets.musics.has(music)
+                                    "m-1 p-0.5 w-24 border-3 border-[#fe9bf2] bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.musics.has(musicName)
                                 }}
                                 onclick={() => {
-                                    filterSets.musics.has(music) ? filterSets.musics.delete(music) : filterSets.musics.add(music);
+                                    filterSets.musics.has(musicName) ? filterSets.musics.delete(musicName) : filterSets.musics.add(musicName);
                                     cardDataShow = filter();
                                 }}
-                                >{music}</button>
+                                ><img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{musicName}" class="p-1 aspect-square"></button>
                         {/each}
                     </div>
                 {/if}
@@ -243,6 +246,7 @@
     </div>
     <div id="list" class="mt-5 grid grid-cols-2 md:grid-cols-4 items-start">
         {#each cardDataShow as card (card.id)}
+        {@const jacketId = musicData.find(({musicName}) => musicName == card.music)?.jacketId}
             <div
                 class={{
                     "relative overflow-hidden m-1.5 p-2.5 border-3 border-[#ccc] rounded-2xl bg-white text-center": true,
@@ -271,14 +275,16 @@
                 <div class="text-right">{card.brandName}</div>
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
-                <div class="text-left">{card.music}</div>
                 <div class="text-left">{toUrlString(card.category1)} / {card.category2}</div>
                 <div class="grid grid-cols-2 pt-2">
-                    <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full p-1"></div>
-                    <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                        <button aria-label="所持数+1" class="w-full bg-[#eee]"><span class="mdi--plus align-middle"></span></button>
-                        <input type="text" class="w-full" disabled>
-                        <button aria-label="所持数-1" class="w-full bg-[#eee]"><span class="mdi--minus align-middle"></span></button>
+                    <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-max p-1"></div>
+                    <div>
+                        <img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{card.music}" title="{card.music}" class="p-1 aspect-square">
+                        <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
+                            <button aria-label="所持数+1" class="w-full bg-[#eee]"><span class="mdi--plus align-middle"></span></button>
+                            <input type="text" class="w-full" disabled>
+                            <button aria-label="所持数-1" class="w-full bg-[#eee]"><span class="mdi--minus align-middle"></span></button>
+                        </div>
                     </div>
                 </div>
             </div>
