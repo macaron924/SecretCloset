@@ -192,7 +192,7 @@
             <div class="coordinateDiv relative m-2 p-2.5 rounded-2xl bg-white text-center">
                 <div class="flex">
                     <div class="grow"></div>
-                    <div class="max-w-1/2"><img src="{base}/img/brand/{coordinate.brandName}.webp" alt="{coordinate.brandName}" title="{coordinate.brandName}" class="w-24 max-w-full h-10 object-cover"></div>
+                    <div class="max-w-1/2"><img src="{base}/img/brand/{coordinate.brandName}.webp" alt="{coordinate.brandName}" title="{coordinate.brandName}" class="w-16 max-w-full h-8 object-cover"></div>
                 </div>
                 <div class="text-xl">{coordinate.coordinateName}</div>
                 <div class="text-left">{toUrlString(coordinate.category1)} / {coordinate.category2}</div>
@@ -204,7 +204,7 @@
                         <div>
                             <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
                             {#if printedId != null}
-                                <div>{printedId}</div>
+                                <div class="text-xs">{printedId}</div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -234,7 +234,7 @@
                         <div>
                             <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
                             {#if printedId != null}
-                                <div>{printedId}</div>
+                                <div class="text-xs">{printedId}</div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -263,7 +263,7 @@
                         <div>
                             <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
                             {#if printedId != null}
-                                <div>{printedId}</div>
+                                <div class="text-xs">{printedId}</div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -292,7 +292,7 @@
                         <div>
                             <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
                             {#if printedId != null}
-                                <div>{printedId}</div>
+                                <div class="text-xs">{printedId}</div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -321,7 +321,7 @@
                         <div>
                             <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
                             {#if printedId != null}
-                                <div>{printedId}</div>
+                                <div class="text-xs">{printedId}</div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>

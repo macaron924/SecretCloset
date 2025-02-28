@@ -272,8 +272,8 @@
                     }}
                 ></div>
                 <div class="flex">
-                    <div class="grow pl-2.5 text-left">{card.idSP === null ? card.id : card.idSP}</div>
-                    <div class="max-w-1/2"><img src="{base}/img/brand/{card.brandName}.webp" alt="{card.brandName}" title="{card.brandName}" class="w-24 max-w-full h-10 object-cover"></div>
+                    <div class="grow pl-2.5 text-xs text-left">{card.idSP === null ? card.id : card.idSP}</div>
+                    <div class="max-w-1/2"><img src="{base}/img/brand/{card.brandName}.webp" alt="{card.brandName}" title="{card.brandName}" class="w-16 max-w-full h-8 object-cover"></div>
                 </div>
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
