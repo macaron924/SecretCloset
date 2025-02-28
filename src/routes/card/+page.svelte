@@ -277,9 +277,9 @@
                 <div class="text-xl">{card.cardName}</div>
                 <div class="text-left">{toUrlString(card.category1)} / {card.category2}</div>
                 <div class="grid grid-cols-2 pt-2">
-                    <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-max p-1"></div>
+                    <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full object-contain object-top p-1"></div>
                     <div>
-                        <img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{card.music}" title="{card.music}" class="p-1 aspect-square">
+                        <img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{card.music}" title="{card.music}" class="p-1 w-full aspect-square">
                         <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                             <button aria-label="所持数+1" class="w-full bg-[#eee]"><span class="mdi--plus align-middle"></span></button>
                             <input type="text" class="w-full" disabled>
