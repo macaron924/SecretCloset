@@ -281,7 +281,10 @@
                 <div class="grid grid-cols-2 pt-2">
                     <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full object-contain object-top p-1"></div>
                     <div>
-                        <img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{card.music}" title="{card.music}" class="p-1 w-full aspect-square">
+                        <div class="relative">
+                            <img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{card.music}" title="{card.music}" class="p-1 w-full aspect-square">
+                            <span class="absolute top-1 left-1 p-0.5 text-xs bg-white/70">遊べる曲</span>
+                        </div>
                         <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                             <button aria-label="所持数+1" class="w-full bg-[#eee]"><span class="mdi--plus align-middle"></span></button>
                             <input type="text" class="w-full" disabled>

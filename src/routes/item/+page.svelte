@@ -202,7 +202,10 @@
                     {@const imageId = coordinate["one-piece"].split(" ")[0]}
                     {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            <div class="relative">
+                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                <img src="{base}/img/one-piece.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                            </div>
                             {#if printedId != null}
                                 <div class="text-xs">{printedId}</div>
                             {/if}
@@ -232,7 +235,10 @@
                     {@const imageId = coordinate.tops.split(" ")[0]}
                     {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            <div class="relative">
+                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                <img src="{base}/img/tops.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                            </div>
                             {#if printedId != null}
                                 <div class="text-xs">{printedId}</div>
                             {/if}
@@ -261,7 +267,10 @@
                     {@const imageId = coordinate.bottoms.split(" ")[0]}
                     {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            <div class="relative">
+                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                <img src="{base}/img/bottoms.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                            </div>
                             {#if printedId != null}
                                 <div class="text-xs">{printedId}</div>
                             {/if}
@@ -290,7 +299,10 @@
                     {@const imageId = coordinate.shoes.split(" ")[0]}
                     {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            <div class="relative">
+                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                <img src="{base}/img/shoes.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                            </div>
                             {#if printedId != null}
                                 <div class="text-xs">{printedId}</div>
                             {/if}
@@ -319,7 +331,10 @@
                     {@const imageId = coordinate.accessory.split(" ")[0]}
                     {@const printedId = getPrintedId(imageId)}
                         <div>
-                            <div><img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1"></div>
+                            <div class="relative">
+                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                <img src="{base}/img/accessory.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                            </div>
                             {#if printedId != null}
                                 <div class="text-xs">{printedId}</div>
                             {/if}
