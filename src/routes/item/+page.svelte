@@ -73,7 +73,7 @@
                             <div>
                                 <button
                                     class={{
-                                        "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                        "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true,
                                         "!bg-[#ffff00]": selectedCategoryNum[index] > 0
                                     }}
                                     onclick={() => {
@@ -96,7 +96,7 @@
                                     aria-label="カテゴリー開閉"
                                     value="{index}"
                                     class={{
-                                        "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true
+                                        "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true
                                     }}
                                     onclick={() => {
                                         isOpenCategory[index] = !isOpenCategory[index];
@@ -115,7 +115,7 @@
                                             <button
                                                 value="{value}"
                                                 class={{
-                                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                                    "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true,
                                                     "!bg-[#ffff00]": filterSets.categories.has(value)
                                                 }}
                                                 onclick={() => {
@@ -150,7 +150,7 @@
                         {#each [{str: "★★★★", num: 4}, {str: "★★★", num: 3}, {str: "★★", num: 2}, {str: "スペシャル", num: 0}] as rarity}
                             <button
                                 class={{
-                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.rarities.has(rarity.num)
                                 }}
                                 onclick={() => {
@@ -173,7 +173,7 @@
                         {#each brandList as brand}
                             <button
                                 class={{
-                                    "m-1 px-2 py-1 w-24 border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "m-1 px-2 py-1 w-24 border-3 border-[#66d9fe] rounded-full bg-white": true,
                                     "!bg-[#ffff00]": filterSets.brands.has(brand)
                                 }}
                                 onclick={() => {
@@ -221,11 +221,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
-                                    <div>※共通</div>
-                                {:else}
-                                    <div>※再録</div>
-                                {/if}
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                         <div></div>
@@ -254,11 +250,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
-                                    <div>※共通</div>
-                                {:else}
-                                    <div>※再録</div>
-                                {/if}
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}
@@ -286,11 +278,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
-                                    <div>※共通</div>
-                                {:else}
-                                    <div>※再録</div>
-                                {/if}
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}
@@ -318,11 +306,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
-                                    <div>※共通</div>
-                                {:else}
-                                    <div>※再録</div>
-                                {/if}
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}
@@ -350,11 +334,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                {#if isSameCategory(imageId, coordinate.category1, coordinate.category2)}
-                                    <div>※共通</div>
-                                {:else}
-                                    <div>※再録</div>
-                                {/if}
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}
