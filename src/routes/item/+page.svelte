@@ -46,13 +46,13 @@
     /**
      * 再録かどうか
      * @param {string} targetId
-     * @param {string} category1
-     * @param {string} category2
+     * @param {string} url
+     * @param {string} category
      */
-    function isSameCategory(targetId, category1, category2) {
+    function isSameCategory(targetId, url, category) {
         const retsult = itemData.find(({ imageId }) => imageId == targetId);
         if (retsult != undefined) {
-            if (retsult.category1 === category1 && retsult.category2 === category2) return true;
+            if (retsult.url === url && retsult.category === category) return true;
             return false;
         }
         return false;
@@ -187,7 +187,7 @@
             </div>
         </div>
     </div>
-    <div id="list" class="grid grid-cols-2 md:grid-cols-4 items-start">
+    <div id="list" class="mt-5 grid grid-cols-2 md:grid-cols-4 items-start">
         {#each coordinateDataShow as coordinate (coordinate.tmpId)}
             <div class="coordinateDiv relative m-2 p-2.5 rounded-2xl bg-white text-center">
                 <div class="flex">
@@ -195,7 +195,7 @@
                     <div class="max-w-1/2"><img src="{base}/img/brand/{coordinate.brandName}.webp" alt="{coordinate.brandName}" title="{coordinate.brandName}" class="w-16 max-w-full h-8 object-cover"></div>
                 </div>
                 <div class="text-xl">{coordinate.coordinateName}</div>
-                <div class="text-left">{toUrlString(coordinate.category1)} / {coordinate.category2}</div>
+                <div class="text-left">{toUrlString(coordinate.url)} / {coordinate.category}</div>
                 <div class="grid grid-cols-2 pt-2">
                     {#if coordinate["one-piece"] != ""}
                     {@const grayout = (coordinate["one-piece"].split(" ").length > 1)}
@@ -221,7 +221,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                         <div></div>
@@ -250,7 +250,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}
@@ -278,7 +278,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}
@@ -306,7 +306,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}
@@ -334,7 +334,7 @@
                                 <button class="w-full bg-[#eee]">-</button>
                             </div>
                             {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.category1, coordinate.category2) ? "※共通" : "※再録"}</div>
+                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
                             {/if}
                         </div>
                     {/if}

@@ -277,7 +277,7 @@
                 </div>
                 <div class="text-xl">{card.character}</div>
                 <div class="text-xl">{card.cardName}</div>
-                <div class="text-left">{toUrlString(card.category1)} / {card.category2}</div>
+                <div class="text-left">{toUrlString(card.url)} / {card.category}</div>
                 <div class="grid grid-cols-2 pt-2">
                     <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full object-contain object-top p-1"></div>
                     <div>
