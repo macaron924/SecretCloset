@@ -207,7 +207,7 @@
                                 <img src="{base}/img/one-piece.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
                             </div>
                             {#if printedId != null}
-                                <div class="text-xs">{printedId}</div>
+                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -236,7 +236,7 @@
                                 <img src="{base}/img/tops.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
                             </div>
                             {#if printedId != null}
-                                <div class="text-xs">{printedId}</div>
+                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -264,7 +264,7 @@
                                 <img src="{base}/img/bottoms.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
                             </div>
                             {#if printedId != null}
-                                <div class="text-xs">{printedId}</div>
+                                <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -292,7 +292,7 @@
                                 <img src="{base}/img/shoes.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
                             </div>
                             {#if printedId != null}
-                                <div class="text-xs">{printedId}</div>
+                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>
@@ -320,7 +320,7 @@
                                 <img src="{base}/img/accessory.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
                             </div>
                             {#if printedId != null}
-                                <div class="text-xs">{printedId}</div>
+                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                 <button class="w-full bg-[#eee]">+</button>

@@ -272,7 +272,11 @@
                     }}
                 ></div>
                 <div class="flex">
-                    <div class="grow pl-2.5 text-xs text-left">{card.idSP === null ? card.id : card.idSP}</div>
+                    <div class="grow pl-2.5 text-xs text-left">{card.idSP === null ? card.id : card.idSP}
+                        {#if card.idSP !== null}
+                            <br><span class=" text-[#aaa]">({card.id})</span>
+                        {/if}
+                    </div>
                     <div class="max-w-1/2"><img src="{base}/img/brand/{card.brandName}.webp" alt="{card.brandName}" title="{card.brandName}" class="w-16 max-w-full h-8 object-cover"></div>
                 </div>
                 <div class="text-xl">{card.character}</div>
