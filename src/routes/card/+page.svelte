@@ -289,10 +289,10 @@
                             <img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{card.music}" title="{card.music}" class="p-1 w-full aspect-square">
                             <span class="absolute top-1 left-1 p-0.5 text-xs bg-white/70">遊べる曲</span>
                         </div>
-                        <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                            <button aria-label="所持数+1" class="w-full bg-[#eee]"><span class="mdi--plus align-middle"></span></button>
-                            <input type="text" class="w-full" disabled>
-                            <button aria-label="所持数-1" class="w-full bg-[#eee]"><span class="mdi--minus align-middle"></span></button>
+                        <div class="overflow-hidden m-1 border-1 border-[#ccc] rounded-2xl">
+                            <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
+                            <input type="text" class="h-6 w-full" disabled>
+                            <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                         </div>
                     </div>
                 </div>

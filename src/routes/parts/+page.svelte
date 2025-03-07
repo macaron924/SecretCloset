@@ -19,12 +19,13 @@
             <div class="text-2xl">{title.title}</div>
                 {#each title.groups as group}
                     <div>
-                        <div class="pt-1 text-xl">・{group.group}
+                        <div class="flex items-end pt-1">
+                            <div class="text-xl">・{group.group}</div>
                             {#if isDream}
-                                <div class="inline-block align-bottom ml-2 overflow-hidden border-1 border-[#ccc] rounded-xl">
-                                    <button aria-label="ランク+1" class="inline-block bg-[#eee] w-5"><span class="mdi--plus align-middle"></span></button>
-                                    <input type="text" class="inline-block w-10" disabled>
-                                    <button aria-label="ランク-1" class="inline-block bg-[#eee] w-5"><span class="mdi--minus align-middle"></span></button>
+                                <div class="flex ml-2 h-6 overflow-hidden border-1 border-[#ccc] rounded-xl">
+                                    <button aria-label="ランク-1" class="flex items-center justify-center h-full w-5 bg-[#eee]"><span class="mdi--minus"></span></button>
+                                    <input type="text" class="inline-block h-full w-10 bg-white" disabled>
+                                    <button aria-label="ランク+1" class="flex items-center justify-center h-full w-5 bg-[#eee]"><span class="mdi--plus"></span></button>
                                 </div>
                             {/if}
                         </div>

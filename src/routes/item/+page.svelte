@@ -210,15 +210,15 @@
                             <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button class="w-full bg-[#eee]">+</button>
+                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "w-full": true,
+                                        "h-6 w-full": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
                                 >
-                                <button class="w-full bg-[#eee]">-</button>
+                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
                             {#if grayout}
                                 <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
@@ -239,15 +239,15 @@
                             <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button class="w-full bg-[#eee]">+</button>
+                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "w-full": true,
+                                        "h-6 w-full": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
                                 >
-                                <button class="w-full bg-[#eee]">-</button>
+                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
                             {#if grayout}
                                 <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
@@ -267,15 +267,15 @@
                                 <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button class="w-full bg-[#eee]">+</button>
+                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "w-full": true,
+                                        "h-6 w-full": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
                                 >
-                                <button class="w-full bg-[#eee]">-</button>
+                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
                             {#if grayout}
                                 <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
@@ -295,15 +295,15 @@
                             <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button class="w-full bg-[#eee]">+</button>
+                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "w-full": true,
+                                        "h-6 w-full": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
                                 >
-                                <button class="w-full bg-[#eee]">-</button>
+                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
                             {#if grayout}
                                 <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
@@ -323,15 +323,15 @@
                             <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
                             {/if}
                             <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button class="w-full bg-[#eee]">+</button>
+                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "w-full": true,
+                                        "h-6 w-full": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
                                 >
-                                <button class="w-full bg-[#eee]">-</button>
+                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
                             {#if grayout}
                                 <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
