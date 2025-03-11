@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import { base } from "$app/paths";
 </script>
 <header class="fixed flex bg-[#ffffe0] h-14 w-full z-50">

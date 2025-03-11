@@ -1,18 +1,19 @@
-<script>
+<script lang="ts">
     import { base } from "$app/paths";
     import { SvelteSet } from "svelte/reactivity";
     import { brandList, cardCategoryList, characterList, toUrlString } from "$lib";
     import cardData from "$lib/assets/card_data.json";
     import musicData from "$lib/assets/music_data.json";
+    import { cardInventoryStore } from "$lib/stores";
+    import type { CardInventory } from "$lib/types";
 
-    /**
-     * @type {boolean[]}
-     */
-    let isOpenCategory = $state([]);
-    /**
-     * @type {number[]}
-     */
-    let selectedCategoryNum = $state([]);
+    let cardInventoryShow: CardInventory = $state({});
+    cardInventoryStore.subscribe((value) => {
+        cardInventoryShow = value;
+    });
+
+    let isOpenCategory: boolean[] = $state([]);
+    let selectedCategoryNum: number[] = $state([]);
     for (let i = 0; i<cardCategoryList.length; i++) {
         isOpenCategory.push(false);
         selectedCategoryNum.push(0);
@@ -291,7 +292,11 @@
                         </div>
                         <div class="overflow-hidden m-1 border-1 border-[#ccc] rounded-2xl">
                             <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
-                            <input type="text" class="h-6 w-full" disabled>
+                            <input
+                                type="text" class="h-6 w-full text-center"
+                                disabled
+                                bind:value={cardInventoryShow[card.id]}
+                            >
                             <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                         </div>
                     </div>

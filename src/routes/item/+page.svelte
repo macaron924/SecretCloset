@@ -1,18 +1,19 @@
-<script>
+<script lang="ts">
     import { base } from "$app/paths";
     import { SvelteSet } from "svelte/reactivity";
     import { brandList, itemCategoryList, toUrlString } from "$lib";
     import itemData from "$lib/assets/item_data.json";
     import coordinateData from "$lib/assets/coordinate_data.json";
+    import { itemInventoryStore } from "$lib/stores";
+    import type { ItemInventory } from "$lib/types";
 
-    /**
-     * @type {boolean[]}
-     */
-    let isOpenCategory = $state([]);
-    /**
-     * @type {number[]}
-     */
-    let selectedCategoryNum = $state([])
+    let itemInventoryShow: ItemInventory = $state({});
+    itemInventoryStore.subscribe((value) => {
+        itemInventoryShow = value;
+    });
+
+    let isOpenCategory: boolean[] = $state([]);
+    let selectedCategoryNum: number[] = $state([])
     for (let i = 0; i<itemCategoryList.length; i++) {
         isOpenCategory.push(false);
         selectedCategoryNum.push(0);
@@ -34,22 +35,12 @@
             && (filterSets.brands.size === 0 || filterSets.brands.has(coordinate.brandName))
         })
     }
-    /**
-     * 排出時印字ID取得
-     * @param {string} targetId
-     */
-    function getPrintedId(targetId) {
+    function getPrintedId(targetId: string) {
         const retsult = itemData.find(({ imageId }) => imageId == targetId);
         if (retsult != undefined) return retsult.id;
         return null;
     }
-    /**
-     * 再録かどうか
-     * @param {string} targetId
-     * @param {string} url
-     * @param {string} category
-     */
-    function isSameCategory(targetId, url, category) {
+    function isSameCategory(targetId: string, url: string, category: string) {
         const retsult = itemData.find(({ imageId }) => imageId == targetId);
         if (retsult != undefined) {
             if (retsult.url === url && retsult.category === category) return true;
@@ -213,10 +204,11 @@
                                 <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "h-6 w-full": true,
+                                        "h-6 w-full text-center": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
+                                    bind:value={itemInventoryShow[imageId]}
                                 >
                                 <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
@@ -242,10 +234,11 @@
                                 <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "h-6 w-full": true,
+                                        "h-6 w-full text-center": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
+                                    bind:value={itemInventoryShow[imageId]}
                                 >
                                 <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
@@ -270,10 +263,11 @@
                                 <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "h-6 w-full": true,
+                                        "h-6 w-full text-center": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
+                                    bind:value={itemInventoryShow[imageId]}
                                 >
                                 <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
@@ -298,10 +292,11 @@
                                 <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "h-6 w-full": true,
+                                        "h-6 w-full text-center": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
+                                    bind:value={itemInventoryShow[imageId]}
                                 >
                                 <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>
@@ -326,10 +321,11 @@
                                 <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
                                 <input type="text"
                                     class={{
-                                        "h-6 w-full": true,
+                                        "h-6 w-full text-center": true,
                                         "bg-[#ccc]": grayout
                                     }}
                                     disabled
+                                    bind:value={itemInventoryShow[imageId]}
                                 >
                                 <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
                             </div>

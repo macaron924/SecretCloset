@@ -1,11 +1,6 @@
 // place files you want to import through the `$lib` alias in this folder.
 
-/**
- * 日本語に変換するか"だん"をつける
- * @param {string} url
- * @returns {string}
- */
-export function toUrlString(url) {
+export function toUrlString(url: string) {
     switch (url) {
         case "special":
             return "スペシャル";
@@ -18,12 +13,7 @@ export function toUrlString(url) {
     }
 }
 
-/**
- * プロモーションかどうか
- * @param {string} category1
- * @returns {boolean}
- */
-export function isPromotion(category1) {
+export function isPromotion(category1: string) {
     switch (category1) {
         case "special":
             return true;

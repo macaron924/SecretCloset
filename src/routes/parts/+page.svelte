@@ -1,13 +1,9 @@
-<script>
+<script lang="ts">
     import { base } from "$app/paths";
     import partsData from "$lib/assets/parts_data.json";
     import partsGetData from "$lib/assets/parts_get.json";
 
-    /**
-     * パーツ情報を返す関数
-     * @param partsName {string}
-     */
-    function getPartsData(partsName) {
+    function getPartsData(partsName: string) {
         return partsData.find((element) => element.name == partsName)
     }
 </script>
