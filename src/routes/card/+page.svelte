@@ -44,7 +44,7 @@
         })
     }
 </script>
-<main class="grow p-2.5">
+<main class="grow mt-15 p-2.5">
     <div class="grid grid-cols-1 md:grid-cols-2">
         <div>
             <div>

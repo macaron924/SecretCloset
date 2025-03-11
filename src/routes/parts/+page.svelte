@@ -11,7 +11,7 @@
         return partsData.find((element) => element.name == partsName)
     }
 </script>
-<main class="grow p-2.5">
+<main class="grow mt-15 p-2.5">
     <h1 class="p-2.5 text-3xl bg-white/70 rounded-xl">入手方法別マイキャラパーツ一覧</h1>
     {#each partsGetData as title}
     {@const isDream = (title.title == "ドリーム")}
