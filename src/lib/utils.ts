@@ -34,7 +34,10 @@ export function importRawCardData(str: string) {
 }
 
 export function resetCardData() {
-    cardInventoryStore.reset();
+    const result = confirm('アイプリカードの所持データをリセットします。本当によろしいですか？');
+    if (result) {
+        cardInventoryStore.reset();
+    }
 }
 
 export function exportRawItemData() {
@@ -55,5 +58,8 @@ export function importRawItemData(str: string) {
 }
 
 export function resetItemData() {
-    itemInventoryStore.reset();
+    const result = confirm('コーデアイテムの所持データをリセットします。本当によろしいですか？');
+    if (result) {
+        itemInventoryStore.reset();
+    }
 }
