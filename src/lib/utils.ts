@@ -1,12 +1,23 @@
 import { get } from "svelte/store";
 import { cardInventoryStore, itemInventoryStore } from "./stores";
+import type { CardInventory, ItemInventory } from "./types";
 
 function isObject(o: any) {
     return (o instanceof Object && !(o instanceof Array)) ? true : false;
 };
 
+function sortPosData(json: CardInventory | ItemInventory) {
+    const keyList = Object.keys(json);
+    keyList.sort();
+    let newJson: CardInventory | ItemInventory = {};
+    keyList.forEach((key) => {
+        newJson[key] = json[key];
+    });
+    return newJson;
+}
+
 export function exportRawCardData() {
-    const data = get(cardInventoryStore);
+    const data = sortPosData(get(cardInventoryStore));
     const str = JSON.stringify(data);
     return str;
 }
@@ -27,7 +38,7 @@ export function resetCardData() {
 }
 
 export function exportRawItemData() {
-    const data = get(itemInventoryStore);
+    const data = sortPosData(get(itemInventoryStore));
     const str = JSON.stringify(data);
     return str;
 }
