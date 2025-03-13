@@ -291,13 +291,41 @@
                             <span class="absolute top-1 left-1 p-0.5 text-xs bg-white/70">遊べる曲</span>
                         </div>
                         <div class="overflow-hidden m-1 border-1 border-[#ccc] rounded-2xl">
-                            <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
+                            <button
+                                aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
+                                onclick={() => {
+                                    if (card.id in cardInventoryShow) {
+                                        cardInventoryShow[card.id]++;
+                                    } else {
+                                        cardInventoryShow[card.id] = 1;
+                                    }
+                                    cardInventoryStore.set(cardInventoryShow);
+                                }}
+                            ><span class="mdi--plus"></span></button>
                             <input
                                 type="text" class="h-6 w-full text-center"
-                                disabled
                                 bind:value={cardInventoryShow[card.id]}
+                                onchange={() => {
+                                    if (cardInventoryShow[card.id] <= 0) {
+                                        delete cardInventoryShow[card.id]
+                                    }
+                                    cardInventoryStore.set(cardInventoryShow);
+                                }}
                             >
-                            <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
+                            <button
+                                aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
+                                onclick={() => {
+                                    if (card.id in cardInventoryShow) {
+                                        cardInventoryShow[card.id]--;
+                                    } else {
+                                        cardInventoryShow[card.id] = -1;
+                                    }
+                                    if (cardInventoryShow[card.id] <= 0) {
+                                        delete cardInventoryShow[card.id]
+                                    }
+                                    cardInventoryStore.set(cardInventoryShow);
+                                }}
+                            ><span class="mdi--minus"></span></button>
                         </div>
                     </div>
                 </div>

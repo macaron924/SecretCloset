@@ -3,9 +3,12 @@
     import { SvelteSet } from "svelte/reactivity";
     import { brandList, itemCategoryList, toUrlString } from "$lib";
     import itemData from "$lib/assets/item_data.json";
-    import coordinateData from "$lib/assets/coordinate_data.json";
+    import coordinateDataTemp from "$lib/assets/coordinate_data.json";
+    const coordinateData = coordinateDataTemp as CoordinateData[];
     import { itemInventoryStore } from "$lib/stores";
-    import type { ItemInventory } from "$lib/types";
+    import type { ItemInventory, CoordinateData, CoordinatePart } from "$lib/types";
+
+    const PARTS_LIST: CoordinatePart[] = ["one-piece", "tops", "bottoms", "shoes", "accessory"];
 
     let itemInventoryShow: ItemInventory = $state({});
     itemInventoryStore.subscribe((value) => {
@@ -188,152 +191,68 @@
                 <div class="text-xl">{coordinate.coordinateName}</div>
                 <div class="text-left">{toUrlString(coordinate.url)} / {coordinate.category}</div>
                 <div class="grid grid-cols-2 pt-2">
-                    {#if coordinate["one-piece"] != ""}
-                    {@const grayout = (coordinate["one-piece"].split(" ").length > 1)}
-                    {@const imageId = coordinate["one-piece"].split(" ")[0]}
-                    {@const printedId = getPrintedId(imageId)}
-                        <div>
-                            <div class="relative">
-                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
-                                <img src="{base}/img/one-piece.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
-                            </div>
-                            {#if printedId != null}
-                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
-                            {/if}
-                            <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
-                                <input type="text"
-                                    class={{
-                                        "h-6 w-full text-center": true,
-                                        "bg-[#ccc]": grayout
-                                    }}
-                                    disabled
-                                    bind:value={itemInventoryShow[imageId]}
-                                >
-                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
-                            </div>
-                            {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
-                            {/if}
-                        </div>
-                        <div></div>
-                    {/if}
-                    {#if coordinate.tops != ""}
-                    {@const grayout = (coordinate.tops.split(" ").length > 1)}
-                    {@const imageId = coordinate.tops.split(" ")[0]}
-                    {@const printedId = getPrintedId(imageId)}
-                        <div>
-                            <div class="relative">
-                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
-                                <img src="{base}/img/tops.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
-                            </div>
-                            {#if printedId != null}
-                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
-                            {/if}
-                            <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
-                                <input type="text"
-                                    class={{
-                                        "h-6 w-full text-center": true,
-                                        "bg-[#ccc]": grayout
-                                    }}
-                                    disabled
-                                    bind:value={itemInventoryShow[imageId]}
-                                >
-                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
-                            </div>
-                            {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
-                            {/if}
-                        </div>
-                    {/if}
-                    {#if coordinate.bottoms != ""}
-                    {@const grayout = (coordinate.bottoms.split(" ").length > 1)}
-                    {@const imageId = coordinate.bottoms.split(" ")[0]}
-                    {@const printedId = getPrintedId(imageId)}
-                        <div>
-                            <div class="relative">
-                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
-                                <img src="{base}/img/bottoms.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
-                            </div>
-                            {#if printedId != null}
+                    {#each PARTS_LIST as part}
+                        {#if coordinate[part] != ""}
+                        {@const grayout = (coordinate[part].split(" ").length > 1)}
+                        {@const imageId = coordinate[part].split(" ")[0]}
+                        {@const printedId = getPrintedId(imageId)}
+                            <div>
+                                <div class="relative">
+                                    <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                    <img src="{base}/img/{part}.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                                </div>
+                                {#if printedId != null}
                                 <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
-                            {/if}
-                            <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
-                                <input type="text"
-                                    class={{
-                                        "h-6 w-full text-center": true,
-                                        "bg-[#ccc]": grayout
-                                    }}
-                                    disabled
-                                    bind:value={itemInventoryShow[imageId]}
-                                >
-                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
+                                {/if}
+                                <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
+                                    <button
+                                        aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
+                                        onclick={() => {
+                                            if (imageId in itemInventoryShow) {
+                                                itemInventoryShow[imageId]++;
+                                            } else {
+                                                itemInventoryShow[imageId] = 1;
+                                            }
+                                            itemInventoryStore.set(itemInventoryShow);
+                                        }}
+                                    ><span class="mdi--plus"></span></button>
+                                    <input type="text"
+                                        class={{
+                                            "h-6 w-full text-center": true,
+                                            "bg-[#ccc]": grayout
+                                        }}
+                                        bind:value={itemInventoryShow[imageId]}
+                                        onchange={() => {
+                                            if (itemInventoryShow[imageId] <= 0) {
+                                                delete itemInventoryShow[imageId]
+                                            }
+                                            itemInventoryStore.set(itemInventoryShow);
+                                        }}
+                                    >
+                                    <button
+                                        aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
+                                        onclick={() => {
+                                            if (imageId in itemInventoryShow) {
+                                                itemInventoryShow[imageId]--;
+                                            } else {
+                                                itemInventoryShow[imageId] = -1;
+                                            }
+                                            if (itemInventoryShow[imageId] <= 0) {
+                                                delete itemInventoryShow[imageId]
+                                            }
+                                            itemInventoryStore.set(itemInventoryShow);
+                                        }}
+                                    ><span class="mdi--minus"></span></button>
+                                </div>
+                                {#if grayout}
+                                    <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
+                                {/if}
                             </div>
-                            {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
+                            {#if part == "one-piece"}
+                                <div></div>
                             {/if}
-                        </div>
-                    {/if}
-                    {#if coordinate.shoes != ""}
-                    {@const grayout = (coordinate.shoes.split(" ").length > 1)}
-                    {@const imageId = coordinate.shoes.split(" ")[0]}
-                    {@const printedId = getPrintedId(imageId)}
-                        <div>
-                            <div class="relative">
-                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
-                                <img src="{base}/img/shoes.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
-                            </div>
-                            {#if printedId != null}
-                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
-                            {/if}
-                            <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
-                                <input type="text"
-                                    class={{
-                                        "h-6 w-full text-center": true,
-                                        "bg-[#ccc]": grayout
-                                    }}
-                                    disabled
-                                    bind:value={itemInventoryShow[imageId]}
-                                >
-                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
-                            </div>
-                            {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
-                            {/if}
-                        </div>
-                    {/if}
-                    {#if coordinate.accessory != ""}
-                    {@const grayout = (coordinate.accessory.split(" ").length > 1)}
-                    {@const imageId = coordinate.accessory.split(" ")[0]}
-                    {@const printedId = getPrintedId(imageId)}
-                        <div>
-                            <div class="relative">
-                                <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
-                                <img src="{base}/img/accessory.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
-                            </div>
-                            {#if printedId != null}
-                            <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
-                            {/if}
-                            <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
-                                <button aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--plus"></span></button>
-                                <input type="text"
-                                    class={{
-                                        "h-6 w-full text-center": true,
-                                        "bg-[#ccc]": grayout
-                                    }}
-                                    disabled
-                                    bind:value={itemInventoryShow[imageId]}
-                                >
-                                <button aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"><span class="mdi--minus"></span></button>
-                            </div>
-                            {#if grayout}
-                                <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
-                            {/if}
-                        </div>
-                    {/if}
+                        {/if}
+                    {/each}
                 </div>
             </div>
         {/each}
