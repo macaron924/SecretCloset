@@ -1,15 +1,15 @@
 import { get } from "svelte/store";
-import { cardInventoryStore, itemInventoryStore } from "./stores";
-import type { CardInventory, ItemInventory } from "./types";
+import { cardInventoryStore, itemInventoryStore, rankListStore } from "./stores";
+import type { CardInventory, ItemInventory, RankList } from "./types";
 
 function isObject(o: any) {
     return (o instanceof Object && !(o instanceof Array)) ? true : false;
 };
 
-function sortPosData(json: CardInventory | ItemInventory) {
+function sortPosData(json: CardInventory | ItemInventory | RankList) {
     const keyList = Object.keys(json);
     keyList.sort();
-    let newJson: CardInventory | ItemInventory = {};
+    let newJson: CardInventory | ItemInventory | RankList = {};
     keyList.forEach((key) => {
         newJson[key] = json[key];
     });
@@ -61,5 +61,29 @@ export function resetItemData() {
     const result = confirm('コーデアイテムの所持データをリセットします。本当によろしいですか？');
     if (result) {
         itemInventoryStore.reset();
+    }
+}
+
+export function exportRawRankData() {
+    const data = sortPosData(get(rankListStore));
+    const str = JSON.stringify(data);
+    return str;
+}
+
+export function importRawRankData(str: string) {
+    try {
+        if (isObject(JSON.parse(str)) === false) throw "IsNotValidObjectError";
+    } catch(error) {
+        return 2;
+    }
+    const data = JSON.parse(str);
+    rankListStore.set(data);
+    return 1;
+}
+
+export function resetRankData() {
+    const result = confirm('ランクデータをリセットします。本当によろしいですか？');
+    if (result) {
+        rankListStore.reset();
     }
 }

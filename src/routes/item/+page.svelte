@@ -224,7 +224,7 @@
                                         bind:value={itemInventoryShow[imageId]}
                                         onchange={() => {
                                             if (itemInventoryShow[imageId] <= 0) {
-                                                delete itemInventoryShow[imageId]
+                                                delete itemInventoryShow[imageId];
                                             }
                                             itemInventoryStore.set(itemInventoryShow);
                                         }}
@@ -238,7 +238,7 @@
                                                 itemInventoryShow[imageId] = -1;
                                             }
                                             if (itemInventoryShow[imageId] <= 0) {
-                                                delete itemInventoryShow[imageId]
+                                                delete itemInventoryShow[imageId];
                                             }
                                             itemInventoryStore.set(itemInventoryShow);
                                         }}

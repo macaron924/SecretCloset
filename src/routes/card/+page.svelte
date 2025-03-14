@@ -307,7 +307,7 @@
                                 bind:value={cardInventoryShow[card.id]}
                                 onchange={() => {
                                     if (cardInventoryShow[card.id] <= 0) {
-                                        delete cardInventoryShow[card.id]
+                                        delete cardInventoryShow[card.id];
                                     }
                                     cardInventoryStore.set(cardInventoryShow);
                                 }}
@@ -321,7 +321,7 @@
                                         cardInventoryShow[card.id] = -1;
                                     }
                                     if (cardInventoryShow[card.id] <= 0) {
-                                        delete cardInventoryShow[card.id]
+                                        delete cardInventoryShow[card.id];
                                     }
                                     cardInventoryStore.set(cardInventoryShow);
                                 }}
