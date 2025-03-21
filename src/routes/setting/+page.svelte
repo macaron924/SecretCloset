@@ -8,6 +8,10 @@
     let importCardStatusNum = $state(0);
     let importItemStatusNum = $state(0);
     let importRankStatusNum = $state(0);
+    let copyStatusStr = ["クリップボードにコピー", "クリップボードにコピーしました"];
+    let copyCardStatusNum = $state(0);
+    let copyItemStatusNum = $state(0);
+    let copyRankStatusNum = $state(0);
 
     function displayStatus(num: number) {
         switch (num) {
@@ -74,6 +78,24 @@
                 resetCardData();
             }}
         >保存リセット</button>
+        <button class="p-1 bg-white border-1"
+            onclick={() => {
+                navigator.clipboard.writeText(importCardText)
+                    .then(() => {
+                        copyCardStatusNum = 1;
+                        setTimeout(() => {
+                            copyCardStatusNum = 0;
+                        }, 1000);
+                    });
+            }}
+        >{copyStatusStr[copyCardStatusNum]}</button>
+        <button class="p-1 bg-white border-1"
+            onclick={() => {
+                navigator.clipboard
+                    .readText()
+                    .then((clipText) => {importCardText = clipText});
+            }}
+        >クリップボードからペースト</button>
     </div>
     <div class="mt-2.5 p-2.5 bg-white/70 rounded-xl">
         <h1 class="mb-2.5 text-xl">コーデアイテム管理</h1>
@@ -115,6 +137,24 @@
                 resetItemData();
             }}
         >保存リセット</button>
+        <button class="p-1 bg-white border-1"
+            onclick={() => {
+                navigator.clipboard.writeText(importItemText)
+                    .then(() => {
+                        copyItemStatusNum = 1;
+                        setTimeout(() => {
+                            copyItemStatusNum = 0;
+                        }, 1000);
+                    });
+            }}
+        >{copyStatusStr[copyItemStatusNum]}</button>
+        <button class="p-1 bg-white border-1"
+            onclick={() => {
+                navigator.clipboard
+                    .readText()
+                    .then((clipText) => {importItemText = clipText});
+            }}
+        >クリップボードからペースト</button>
     </div>
     <div class="mt-2.5 p-2.5 bg-white/70 rounded-xl">
         <h1 class="mb-2.5 text-xl">ドリームランク管理</h1>
@@ -156,5 +196,23 @@
                 resetRankData();
             }}
         >保存リセット</button>
+        <button class="p-1 bg-white border-1"
+            onclick={() => {
+                navigator.clipboard.writeText(importRankText)
+                    .then(() => {
+                        copyRankStatusNum = 1;
+                        setTimeout(() => {
+                            copyRankStatusNum = 0;
+                        }, 1000);
+                    });
+            }}
+        >{copyStatusStr[copyRankStatusNum]}</button>
+        <button class="p-1 bg-white border-1"
+            onclick={() => {
+                navigator.clipboard
+                    .readText()
+                    .then((clipText) => {importRankText = clipText});
+            }}
+        >クリップボードからペースト</button>
     </div>
 </main>
