@@ -5,7 +5,6 @@
     let importCardText = $state("");
     let importItemText = $state("");
     let importRankText = $state("");
-    let statusText = ["インポート", "インポート成功", "インポート失敗"]
     let importCardStatusNum = $state(0);
     let importItemStatusNum = $state(0);
     let importRankStatusNum = $state(0);
@@ -97,7 +96,7 @@
                     importItemStatusNum = 0;
                 }, 1000);
             }}
-        >{statusText[importItemStatusNum]}</button>
+        >{displayStatus(importItemStatusNum)}</button>
         <button
             class="p-1 bg-white border-1"
             onclick={() => {
@@ -138,7 +137,7 @@
                     importRankStatusNum = 0;
                 }, 1000);
             }}
-        >{statusText[importRankStatusNum]}</button>
+        >{displayStatus(importRankStatusNum)}</button>
         <button
             class="p-1 bg-white border-1"
             onclick={() => {
