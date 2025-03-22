@@ -9,6 +9,7 @@ export function toUrlString(url: string) {
         case "millefeui":
             return "ミルフィーカード";
         default:
+            if (url.startsWith("ring")) return `${url.replace("ring", "リング")}だん`;
             return `${url}だん`;
     }
 }
@@ -36,12 +37,18 @@ export const characterList = [
     "アイリ",
     "リンリン",
     "チィ",
+    "じゅりあ",
+    "える",
     "ダークチィ",
     "ダークサクラ",
     "ダークタマキ",
     "ダークアイリ",
     "ダークリンリン"
 ];
+export const buzzTypeList = [
+    "ネオン",
+    "ジュエル"
+]
 export const brandList = [
     "ポッピンハート",
     "ミラクルムーン",
@@ -51,12 +58,17 @@ export const brandList = [
     "レインボーキャンディ",
     "ベアベアベア",
     "ラブマイミュージック",
+    "プリンセスリング",
+    "キューティーカラット",
     "プリズムストーン",
     "クリスタルバース",
-    "プリンセスリング",
     "プリティーコレクション"
 ];
 export const cardCategoryList = [
+    {
+        url: "ring1",
+        categories: ["☆☆☆☆", "☆☆☆", "☆☆"]
+    },
     {
         url: "6",
         categories: ["☆☆☆☆", "☆☆☆", "☆☆"]

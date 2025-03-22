@@ -1,7 +1,7 @@
 <script lang="ts">
     import { base } from "$app/paths";
     import { SvelteSet } from "svelte/reactivity";
-    import { brandList, cardCategoryList, characterList, toUrlString } from "$lib";
+    import { brandList, buzzTypeList, cardCategoryList, characterList, toUrlString } from "$lib";
     import cardData from "$lib/assets/card_data.json";
     import musicData from "$lib/assets/music_data.json";
     import { cardInventoryStore } from "$lib/stores";
@@ -23,6 +23,7 @@
     let filterSets = $state({
         categories: new SvelteSet(),
         chance: new SvelteSet(),
+        buzzTypes: new SvelteSet(),
         types: new SvelteSet(),
         characters: new SvelteSet(),
         brands: new SvelteSet(),
@@ -30,6 +31,7 @@
     });
     let isOpenFilterCategory = $state(false);
     let isOpenFilterChance = $state(false);
+    let isOpenFilterBuzzType = $state(false);
     let isOpenFilterType = $state(false);
     let isOpenFilterCharacter = $state(false);
     let isOpenFilterBrand = $state(false);
@@ -38,6 +40,7 @@
         return cardData.filter(card => {
             return (filterSets.categories.size === 0 || filterSets.categories.has(card.connectedCategory))
             && (filterSets.chance.size === 0 || filterSets.chance.has(card.chance))
+            && (filterSets.buzzTypes.size === 0 || filterSets.buzzTypes.has(card.buzzType))
             && (filterSets.types.size === 0 || filterSets.types.has(card.type))
             && (filterSets.characters.size === 0 || filterSets.characters.has(card.character))
             && (filterSets.brands.size === 0 || filterSets.brands.has(card.brandName))
@@ -144,6 +147,29 @@
                                     cardDataShow = filter();
                                 }}
                             >{chance.str}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+            <div>
+                <button
+                    onclick={() => {
+                        isOpenFilterBuzzType = !isOpenFilterBuzzType;
+                    }}
+                >{isOpenFilterBuzzType ? "▲" : "▼"} バズリウムタイプ選択</button>
+                {#if isOpenFilterBuzzType}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each buzzTypeList as buzzType}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.buzzTypes.has(buzzType)
+                                }}
+                                onclick={() => {
+                                    filterSets.buzzTypes.has(buzzType) ? filterSets.buzzTypes.delete(buzzType) : filterSets.buzzTypes.add(buzzType);
+                                    cardDataShow = filter();
+                                }}
+                            >{buzzType}</button>
                         {/each}
                     </div>
                 {/if}
