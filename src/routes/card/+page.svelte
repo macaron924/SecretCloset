@@ -53,6 +53,10 @@
         <div>
             <div>
                 <button
+                    class={{
+                        "p-1": true,
+                        "bg-[#ffff85]": filterSets.categories.size > 0
+                    }}
                     onclick={() => {
                         isOpenFilterCategory = !isOpenFilterCategory;
                     }}
@@ -64,7 +68,7 @@
                                 <button
                                     class={{
                                         "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                        "!bg-[#ffff00]": selectedCategoryNum[index] > 0
+                                        "!bg-[#ffff85]": selectedCategoryNum[index] > 0
                                     }}
                                     onclick={() => {
                                         if (selectedCategoryNum[index] == url.categories.length) {
@@ -105,7 +109,7 @@
                                                 value="{value}"
                                                 class={{
                                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                                    "!bg-[#ffff00]": filterSets.categories.has(value)
+                                                    "!bg-[#ffff85]": filterSets.categories.has(value)
                                                 }}
                                                 onclick={() => {
                                                     if (filterSets.categories.has(value)) {
@@ -130,6 +134,10 @@
         <div>
             <div>
                 <button
+                    class={{
+                        "p-1": true,
+                        "bg-[#ffff85]": filterSets.chance.size > 0
+                    }}
                     onclick={() => {
                         isOpenFilterChance = !isOpenFilterChance;
                     }}
@@ -140,7 +148,7 @@
                             <button
                                 class={{
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                    "!bg-[#ffff00]": filterSets.chance.has(chance.tf)
+                                    "!bg-[#ffff85]": filterSets.chance.has(chance.tf)
                                 }}
                                 onclick={() => {
                                     filterSets.chance.has(chance.tf) ? filterSets.chance.delete(chance.tf) : filterSets.chance.add(chance.tf);
@@ -153,6 +161,10 @@
             </div>
             <div>
                 <button
+                    class={{
+                        "p-1": true,
+                        "bg-[#ffff85]": filterSets.buzzTypes.size > 0
+                    }}
                     onclick={() => {
                         isOpenFilterBuzzType = !isOpenFilterBuzzType;
                     }}
@@ -163,7 +175,7 @@
                             <button
                                 class={{
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                    "!bg-[#ffff00]": filterSets.buzzTypes.has(buzzType)
+                                    "!bg-[#ffff85]": filterSets.buzzTypes.has(buzzType)
                                 }}
                                 onclick={() => {
                                     filterSets.buzzTypes.has(buzzType) ? filterSets.buzzTypes.delete(buzzType) : filterSets.buzzTypes.add(buzzType);
@@ -176,6 +188,10 @@
             </div>
             <div>
                 <button
+                    class={{
+                        "p-1": true,
+                        "bg-[#ffff85]": filterSets.types.size > 0
+                    }}
                     onclick={() => {
                         isOpenFilterType = !isOpenFilterType;
                     }}
@@ -186,7 +202,7 @@
                             <button
                                 class={{
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                    "!bg-[#ffff00]": filterSets.types.has(type)
+                                    "!bg-[#ffff85]": filterSets.types.has(type)
                                 }}
                                 onclick={() => {
                                     filterSets.types.has(type) ? filterSets.types.delete(type) : filterSets.types.add(type);
@@ -199,6 +215,10 @@
             </div>
             <div>
                 <button
+                    class={{
+                        "p-1": true,
+                        "bg-[#ffff85]": filterSets.characters.size > 0
+                    }}
                     onclick={() => {
                         isOpenFilterCharacter = !isOpenFilterCharacter;
                     }}
@@ -209,7 +229,7 @@
                             <button
                                 class={{
                                     "m-1 px-2 py-1 h-max border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                    "!bg-[#ffff00]": filterSets.characters.has(character)
+                                    "!bg-[#ffff85]": filterSets.characters.has(character)
                                 }}
                                 onclick={() => {
                                     filterSets.characters.has(character) ? filterSets.characters.delete(character) : filterSets.characters.add(character);
@@ -222,6 +242,10 @@
             </div>
             <div>
                 <button
+                    class={{
+                        "p-1": true,
+                        "bg-[#ffff85]": filterSets.brands.size > 0
+                    }}
                     onclick={() => {
                         isOpenFilterBrand = !isOpenFilterBrand;
                     }}
@@ -232,7 +256,7 @@
                             <button
                                 class={{
                                     "m-1 px-2 py-1 w-24 border-3 border-[#fe9bf2] rounded-full bg-white": true,
-                                    "!bg-[#ffff00]": filterSets.brands.has(brand)
+                                    "!bg-[#ffff85]": filterSets.brands.has(brand)
                                 }}
                                 onclick={() => {
                                     filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
@@ -245,6 +269,10 @@
             </div>
             <div>
                 <button
+                    class={{
+                        "p-1": true,
+                        "bg-[#ffff85]": filterSets.musics.size > 0
+                    }}
                     onclick={() => {
                         isOpenFilterMusic = !isOpenFilterMusic;
                     }}
@@ -258,7 +286,7 @@
                                 title="{musicName}"
                                 class={{
                                     "m-1 p-0.5 w-24 border-3 border-[#fe9bf2] bg-white": true,
-                                    "!bg-[#ffff00]": filterSets.musics.has(musicName)
+                                    "!bg-[#ffff85]": filterSets.musics.has(musicName)
                                 }}
                                 onclick={() => {
                                     filterSets.musics.has(musicName) ? filterSets.musics.delete(musicName) : filterSets.musics.add(musicName);
@@ -271,7 +299,8 @@
             </div>
         </div>
     </div>
-    <div id="list" class="mt-5 grid grid-cols-2 md:grid-cols-4 items-start">
+    <div class="p-2.5 mt-2.5 bg-white/70 rounded-xl">現在 {cardDataShow.length} 枚のカードを表示しています</div>
+    <div id="list" class="mt-2 grid grid-cols-2 md:grid-cols-4 items-start">
         {#each cardDataShow as card (card.id)}
         {@const jacketId = musicData.find(({musicName}) => musicName == card.music)?.jacketId}
             <div
