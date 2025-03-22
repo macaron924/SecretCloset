@@ -12,23 +12,40 @@
         rankListShow = value;
     });
 
+    let elementArray: HTMLDivElement[] = $state([]);
+
     function getPartsData(partsName: string) {
         return partsData.find((element) => element.name == partsName)
     }
 </script>
 <main class="grow mt-15 p-2.5">
     <h1 class="p-2.5 text-3xl bg-white/70 rounded-xl">入手方法別マイキャラパーツ一覧</h1>
-    <!--<div class="p-2.5 mt-2.5 text-2xl bg-white/70 rounded-xl">
-        <select name="" id=""></select>
-    </div>-->
-    {#each partsGetData as title}
+    <div class="p-2.5 mt-2.5 text-2xl bg-white/70 rounded-xl">
+        <select
+            class="bg-white border-1"
+            onchange={(e) => {
+                elementArray[e.currentTarget.selectedIndex].scrollIntoView({behavior: "smooth"})
+            }}
+        >
+            {#each elementArray as element, index}
+                <option
+                    value=""
+                >{partsGetData[index].title}</option>
+            {/each}
+        </select>
+        にジャンプ
+    </div>
+    {#each partsGetData as title, index}
     {@const isDream = (title.title == "ドリーム")}
         <div class="p-2.5 mt-2.5 bg-white/70 rounded-xl">
-            <div class="text-2xl">
+            <div
+                class="text-2xl scroll-mt-19"
+                bind:this={elementArray[index]}
+            >
                 {title.title}
                 {#if isDream}
                     <button
-                        class="text-xl"
+                        class="p-1 bg-white border-1 text-base"
                         onclick={() => {isOpenRankSummary = !isOpenRankSummary}}
                     >ランク一覧</button>
                 {/if}
