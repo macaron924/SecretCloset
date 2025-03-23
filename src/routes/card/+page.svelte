@@ -19,6 +19,7 @@
         selectedCategoryNum.push(0);
     }
 
+    let isShowFront = $state(true);
     let cardDataShow = $state(cardData);
     let filterSets = $state({
         categories: new SvelteSet(),
@@ -49,7 +50,15 @@
     }
 </script>
 <main class="grow mt-15 p-2.5">
-    <div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="flex gap-2 fixed top-18 z-10 p-2.5 w-max bg-white/90 rounded-xl">
+        <div>現在 <span class="font-bold">{cardDataShow.length}</span> 枚のカードを表示しています</div>
+        <button
+            class="flex items-center justify-center px-2 bg-white border-1 rounded-full"
+            onclick={() => {
+                isShowFront = !isShowFront;
+            }}
+        ><span class="mdi--counterclockwise-arrows text-xl"></span>裏表切り替え</button></div>
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2">
         <div>
             <div>
                 <button
@@ -299,7 +308,6 @@
             </div>
         </div>
     </div>
-    <div class="p-2.5 mt-2.5 bg-white/70 rounded-xl">現在 {cardDataShow.length} 枚のカードを表示しています</div>
     <div id="list" class="mt-2 grid grid-cols-2 md:grid-cols-4 items-start">
         {#each cardDataShow as card (card.id)}
         {@const jacketId = musicData.find(({musicName}) => musicName == card.music)?.jacketId}
@@ -339,7 +347,7 @@
                 <div class="text-xl">{card.cardName}</div>
                 <div class="text-left">{toUrlString(card.url)} / {card.category}</div>
                 <div class="grid grid-cols-2 pt-2">
-                    <div><img src="{base}/img/card/{card.id}_O_150.webp" alt="" class="size-full object-contain object-top p-1"></div>
+                    <div><img src="{base}/img/card/{card.id}_{isShowFront ? "O" : "U"}_150.webp" alt="" class="size-full object-contain object-top p-1"></div>
                     <div>
                         <div class="relative">
                             <img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{card.music}" title="{card.music}" class="p-1 w-full aspect-square">

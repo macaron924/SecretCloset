@@ -53,7 +53,8 @@
     }
 </script>
 <main class="grow mt-15 p-2.5">
-    <div class="grid grid-cols-1 md:grid-cols-2">
+    <div class="fixed top-18 z-10 p-2.5 w-max bg-white/90 rounded-xl">現在 <span class="font-bold">{coordinateDataShow.length}</span> のコーデを表示しています</div>
+    <div class="mt-12 grid grid-cols-1 md:grid-cols-2">
         <div>
             <div>
                 <button
@@ -193,7 +194,6 @@
             </div>
         </div>
     </div>
-    <div class="p-2.5 mt-2.5 bg-white/70 rounded-xl">現在 {coordinateDataShow.length} のコーデを表示しています</div>
     <div id="list" class="mt-2 grid grid-cols-2 md:grid-cols-4 items-start">
         {#each coordinateDataShow as coordinate (coordinate.tmpId)}
             <div class="coordinateDiv relative m-2 p-2.5 rounded-2xl bg-white text-center">
