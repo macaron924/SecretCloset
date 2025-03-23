@@ -59,7 +59,7 @@
                 <button
                     class={{
                         "p-1": true,
-                        "bg-[#ffff85]": filterSets.categories.size > 0
+                        "bg-[#ffff00]": filterSets.categories.size > 0
                     }}
                     onclick={() => {
                         isOpenFilterCategory = !isOpenFilterCategory;
@@ -72,7 +72,7 @@
                                 <button
                                     class={{
                                         "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true,
-                                        "!bg-[#ffff85]": selectedCategoryNum[index] > 0
+                                        "!bg-[#ffff00]": selectedCategoryNum[index] > 0
                                     }}
                                     onclick={() => {
                                         if (selectedCategoryNum[index] == url.categories.length) {
@@ -114,7 +114,7 @@
                                                 value="{value}"
                                                 class={{
                                                     "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true,
-                                                    "!bg-[#ffff85]": filterSets.categories.has(value)
+                                                    "!bg-[#ffff00]": filterSets.categories.has(value)
                                                 }}
                                                 onclick={() => {
                                                     if (filterSets.categories.has(value)) {
@@ -141,7 +141,7 @@
                 <button
                     class={{
                         "p-1": true,
-                        "bg-[#ffff85]": filterSets.rarities.size > 0
+                        "bg-[#ffff00]": filterSets.rarities.size > 0
                     }}
                     onclick={() => {
                         isOpenFilterRarity = !isOpenFilterRarity;
@@ -153,7 +153,7 @@
                             <button
                                 class={{
                                     "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true,
-                                    "!bg-[#ffff85]": filterSets.rarities.has(rarity.num)
+                                    "!bg-[#ffff00]": filterSets.rarities.has(rarity.num)
                                 }}
                                 onclick={() => {
                                     filterSets.rarities.has(rarity.num) ? filterSets.rarities.delete(rarity.num) : filterSets.rarities.add(rarity.num);
@@ -168,7 +168,7 @@
                 <button
                     class={{
                         "p-1": true,
-                        "bg-[#ffff85]": filterSets.brands.size > 0
+                        "bg-[#ffff00]": filterSets.brands.size > 0
                     }}
                     onclick={() => {
                         isOpenFilterBrand = !isOpenFilterBrand;
@@ -180,7 +180,7 @@
                             <button
                                 class={{
                                     "m-1 px-2 py-1 w-24 border-3 border-[#66d9fe] rounded-full bg-white": true,
-                                    "!bg-[#ffff85]": filterSets.brands.has(brand)
+                                    "!bg-[#ffff00]": filterSets.brands.has(brand)
                                 }}
                                 onclick={() => {
                                     filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
