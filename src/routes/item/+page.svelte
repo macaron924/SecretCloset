@@ -39,12 +39,17 @@
         })
     }
     function getPrintedId(targetId: string) {
-        const retsult = itemData.find(({ imageId }) => imageId == targetId);
+        const retsult = itemData.find(({ manageId }) => manageId == targetId);
         if (retsult != undefined) return retsult.id;
         return null;
     }
+    function getImageId(targetId: string) {
+        const retsult = itemData.find(({ manageId }) => manageId == targetId);
+        if (retsult != undefined) return retsult.imageId;
+        return null;
+    }
     function isSameCategory(targetId: string, url: string, category: string) {
-        const retsult = itemData.find(({ imageId }) => imageId == targetId);
+        const retsult = itemData.find(({ manageId }) => manageId == targetId);
         if (retsult != undefined) {
             if (retsult.url === url && retsult.category === category) return true;
             return false;
@@ -207,24 +212,25 @@
                     {#each PARTS_LIST as part}
                         {#if coordinate[part] != ""}
                         {@const grayout = (coordinate[part].split(" ").length > 1)}
-                        {@const imageId = coordinate[part].split(" ")[0]}
-                        {@const printedId = getPrintedId(imageId)}
+                        {@const manageId = coordinate[part].split(" ")[0]}
+                        {@const printedId = getPrintedId(manageId)}
+                        {@const imageId = getImageId(manageId)}
                             <div>
                                 <div class="relative">
                                     <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
                                     <img src="{base}/img/{part}.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
                                 </div>
                                 {#if printedId != null}
-                                <div class="text-xs">{printedId} <span class=" text-[#aaa]">({imageId})</span></div>
+                                <div class="text-xs">{printedId} <span class=" text-[#aaa]">({manageId})</span></div>
                                 {/if}
                                 <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
                                     <button
                                         aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
                                         onclick={() => {
-                                            if (imageId in itemInventoryShow) {
-                                                itemInventoryShow[imageId]++;
+                                            if (manageId in itemInventoryShow) {
+                                                itemInventoryShow[manageId]++;
                                             } else {
-                                                itemInventoryShow[imageId] = 1;
+                                                itemInventoryShow[manageId] = 1;
                                             }
                                             itemInventoryStore.set(itemInventoryShow);
                                         }}
@@ -234,10 +240,10 @@
                                             "h-6 w-full text-center": true,
                                             "bg-[#ccc]": grayout
                                         }}
-                                        bind:value={itemInventoryShow[imageId]}
+                                        bind:value={itemInventoryShow[manageId]}
                                         onchange={() => {
-                                            if (itemInventoryShow[imageId] <= 0) {
-                                                delete itemInventoryShow[imageId];
+                                            if (itemInventoryShow[manageId] <= 0) {
+                                                delete itemInventoryShow[manageId];
                                             }
                                             itemInventoryStore.set(itemInventoryShow);
                                         }}
@@ -245,20 +251,20 @@
                                     <button
                                         aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
                                         onclick={() => {
-                                            if (imageId in itemInventoryShow) {
-                                                itemInventoryShow[imageId]--;
+                                            if (manageId in itemInventoryShow) {
+                                                itemInventoryShow[manageId]--;
                                             } else {
-                                                itemInventoryShow[imageId] = -1;
+                                                itemInventoryShow[manageId] = -1;
                                             }
-                                            if (itemInventoryShow[imageId] <= 0) {
-                                                delete itemInventoryShow[imageId];
+                                            if (itemInventoryShow[manageId] <= 0) {
+                                                delete itemInventoryShow[manageId];
                                             }
                                             itemInventoryStore.set(itemInventoryShow);
                                         }}
                                     ><span class="mdi--minus"></span></button>
                                 </div>
                                 {#if grayout}
-                                    <div class="text-xs">{isSameCategory(imageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
+                                    <div class="text-xs">{isSameCategory(manageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
                                 {/if}
                             </div>
                             {#if part == "one-piece"}
