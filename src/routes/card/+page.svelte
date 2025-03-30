@@ -50,15 +50,16 @@
     }
 </script>
 <main class="grow mt-15 p-2.5">
-    <div class="flex gap-2 fixed top-18 z-10 p-2.5 w-max bg-white/90 rounded-xl">
+    <div class="flex flex-col flex-wrap gap-2 fixed top-18 z-10 p-2.5 w-max bg-white/90 rounded-xl">
         <div>現在 <span class="font-bold">{cardDataShow.length}</span> 枚のカードを表示しています</div>
         <button
-            class="flex items-center justify-center px-2 bg-white border-1 rounded-full"
+            class="flex items-center justify-center px-2 w-max bg-white border-1 rounded-full"
             onclick={() => {
                 isShowFront = !isShowFront;
             }}
-        ><span class="mdi--counterclockwise-arrows text-xl"></span>裏表切り替え</button></div>
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-2">
+        ><span class="mdi--counterclockwise-arrows text-xl"></span>裏表切り替え</button>
+    </div>
+    <div class="mt-20 grid grid-cols-1 md:grid-cols-2">
         <div>
             <div>
                 <button
