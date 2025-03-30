@@ -4,7 +4,9 @@
     import { brandList, itemCategoryList, toUrlString } from "$lib";
     import itemData from "$lib/assets/item_data.json";
     import coordinateDataTemp from "$lib/assets/coordinate_data.json";
+    import unlistedcoordinateDataTemp from "$lib/assets/unlisted_coordinate_data.json";
     const coordinateData = coordinateDataTemp as CoordinateData[];
+    const unlistedcoordinateData = unlistedcoordinateDataTemp as CoordinateData[];
     import { itemInventoryStore } from "$lib/stores";
     import type { ItemInventory, CoordinateData, CoordinatePart } from "$lib/types";
 
@@ -16,13 +18,14 @@
     });
 
     let isOpenCategory: boolean[] = $state([]);
-    let selectedCategoryNum: number[] = $state([])
+    let selectedCategoryNum: number[] = $state([]);
     for (let i = 0; i<itemCategoryList.length; i++) {
         isOpenCategory.push(false);
         selectedCategoryNum.push(0);
     }
 
-    let coordinateDataShow = $state(coordinateData)
+    let coordinateDataShow = $state(coordinateData);
+    let unlistedcoordinateDataShow = $state(unlistedcoordinateData);
     let filterSets = $state({
         categories: new SvelteSet(),
         rarities: new SvelteSet(),
@@ -33,6 +36,13 @@
     let isOpenFilterBrand = $state(false);
     function filter() {
         return coordinateData.filter(coordinate => {
+            return (filterSets.categories.size === 0 || filterSets.categories.has(coordinate.connectedCategory))
+            && (filterSets.rarities.size === 0 || filterSets.rarities.has(coordinate.rarity))
+            && (filterSets.brands.size === 0 || filterSets.brands.has(coordinate.brandName))
+        })
+    }
+    function unlistedCoordinateDataFilter() {
+        return unlistedcoordinateData.filter(coordinate => {
             return (filterSets.categories.size === 0 || filterSets.categories.has(coordinate.connectedCategory))
             && (filterSets.rarities.size === 0 || filterSets.rarities.has(coordinate.rarity))
             && (filterSets.brands.size === 0 || filterSets.brands.has(coordinate.brandName))
@@ -58,7 +68,7 @@
     }
 </script>
 <main class="grow mt-15 p-2.5">
-    <div class="fixed top-18 z-10 p-2.5 w-max bg-white/90 rounded-xl">現在 <span class="font-bold">{coordinateDataShow.length}</span> のコーデを表示しています</div>
+    <div class="fixed top-18 z-10 p-2.5 w-max bg-white/90 rounded-xl">現在 <span class="font-bold">{coordinateDataShow.length+unlistedcoordinateDataShow.length}</span> のコーデを表示しています</div>
     <div class="mt-12 grid grid-cols-1 md:grid-cols-2">
         <div>
             <div>
@@ -93,6 +103,7 @@
                                             selectedCategoryNum[index] = url.categories.length;
                                         }
                                         coordinateDataShow = filter();
+                                        unlistedcoordinateDataShow = unlistedCoordinateDataFilter();
 
                                     }}
                                 >{toUrlString(url.url)} <span class="text-gray-400">({selectedCategoryNum[index]}/{url.categories.length})</span></button>
@@ -131,6 +142,7 @@
                                                         selectedCategoryNum[index]++;
                                                     }
                                                     coordinateDataShow = filter();
+                                                    unlistedcoordinateDataShow = unlistedCoordinateDataFilter();
                                                 }}
                                             >{category}</button>
                                         {/each}
@@ -164,6 +176,7 @@
                                 onclick={() => {
                                     filterSets.rarities.has(rarity.num) ? filterSets.rarities.delete(rarity.num) : filterSets.rarities.add(rarity.num);
                                     coordinateDataShow = filter();
+                                    unlistedcoordinateDataShow = unlistedCoordinateDataFilter();
                                 }}
                                 >{rarity.str}</button>
                         {/each}
@@ -191,6 +204,7 @@
                                 onclick={() => {
                                     filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
                                     coordinateDataShow = filter();
+                                    unlistedcoordinateDataShow = unlistedCoordinateDataFilter();
                                 }}
                             ><img src="{base}/img/brand/{brand}.webp" alt="{brand}" title="{brand}" class="w-full h-10 object-cover"></button>
                         {/each}
@@ -215,6 +229,81 @@
                         {@const manageId = coordinate[part].split(" ")[0]}
                         {@const printedId = getPrintedId(manageId)}
                         {@const imageId = getImageId(manageId)}
+                            <div>
+                                <div class="relative">
+                                    <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                    <img src="{base}/img/{part}.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                                </div>
+                                {#if printedId != null}
+                                <div class="text-xs">{printedId} <span class=" text-[#aaa]">({manageId})</span></div>
+                                {/if}
+                                <div class="overflow-hidden h-max m-1 border-1 border-[#ccc] rounded-2xl">
+                                    <button
+                                        aria-label="所持数+1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
+                                        onclick={() => {
+                                            if (manageId in itemInventoryShow) {
+                                                itemInventoryShow[manageId]++;
+                                            } else {
+                                                itemInventoryShow[manageId] = 1;
+                                            }
+                                            itemInventoryStore.set(itemInventoryShow);
+                                        }}
+                                    ><span class="mdi--plus"></span></button>
+                                    <input type="text"
+                                        class={{
+                                            "h-6 w-full text-center": true,
+                                            "bg-[#ccc]": grayout
+                                        }}
+                                        bind:value={itemInventoryShow[manageId]}
+                                        onchange={() => {
+                                            if (itemInventoryShow[manageId] <= 0) {
+                                                delete itemInventoryShow[manageId];
+                                            }
+                                            itemInventoryStore.set(itemInventoryShow);
+                                        }}
+                                    >
+                                    <button
+                                        aria-label="所持数-1" class="flex items-center justify-center h-6 w-full bg-[#eee]"
+                                        onclick={() => {
+                                            if (manageId in itemInventoryShow) {
+                                                itemInventoryShow[manageId]--;
+                                            } else {
+                                                itemInventoryShow[manageId] = -1;
+                                            }
+                                            if (itemInventoryShow[manageId] <= 0) {
+                                                delete itemInventoryShow[manageId];
+                                            }
+                                            itemInventoryStore.set(itemInventoryShow);
+                                        }}
+                                    ><span class="mdi--minus"></span></button>
+                                </div>
+                                {#if grayout}
+                                    <div class="text-xs">{isSameCategory(manageId, coordinate.url, coordinate.category) ? "※共通" : "※再録"}</div>
+                                {/if}
+                            </div>
+                            {#if part == "one-piece"}
+                                <div></div>
+                            {/if}
+                        {/if}
+                    {/each}
+                </div>
+            </div>
+        {/each}
+        {#each unlistedcoordinateDataShow as coordinate (coordinate.tmpId)}
+            <div class="coordinateDiv relative m-2 p-2.5 rounded-2xl bg-white text-center">
+                <div class="flex">
+                    <div class="grow"></div>
+                    <div class="max-w-1/2"><img src="{base}/img/brand/{coordinate.brandName}.webp" alt="{coordinate.brandName}" title="{coordinate.brandName}" class="w-16 max-w-full h-8 object-cover"></div>
+                </div>
+                <div class="text-xl">{coordinate.coordinateName}</div>
+                <div class="text-left">{toUrlString(coordinate.url)} / {coordinate.category}</div>
+                <div class="grid grid-cols-2 pt-2">
+                    {#each PARTS_LIST as part}
+                        {#if coordinate[part] != ""}
+                        {@const grayout = (coordinate[part].split(" ").length > 1)}
+                        {@const manageId = coordinate[part].split(" ")[0]}
+                        {@const printedId = ""}
+                        {@const imageId = manageId}
                             <div>
                                 <div class="relative">
                                     <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
