@@ -37,6 +37,7 @@ type CoordinateData1 = {
     connectedCategory: string;
     coordinateName: string;
     brandName: string;
+    buzzType: string;
     rarity: number;
 };
 

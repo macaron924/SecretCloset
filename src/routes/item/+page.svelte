@@ -1,7 +1,7 @@
 <script lang="ts">
     import { base } from "$app/paths";
     import { SvelteSet } from "svelte/reactivity";
-    import { brandList, itemCategoryList, toUrlString } from "$lib";
+    import { brandList, buzzTypeList, itemCategoryList, toUrlString } from "$lib";
     import itemData from "$lib/assets/item_data.json";
     import coordinateDataTemp from "$lib/assets/coordinate_data.json";
     import unlistedcoordinateDataTemp from "$lib/assets/unlisted_coordinate_data.json";
@@ -29,15 +29,18 @@
     let filterSets = $state({
         categories: new SvelteSet(),
         rarities: new SvelteSet(),
+        buzzTypes: new SvelteSet(),
         brands: new SvelteSet(),
     });
     let isOpenFilterCategory = $state(false);
     let isOpenFilterRarity = $state(false);
+    let isOpenFilterBuzzType = $state(false);
     let isOpenFilterBrand = $state(false);
     function filter() {
         return coordinateData.filter(coordinate => {
             return (filterSets.categories.size === 0 || filterSets.categories.has(coordinate.connectedCategory))
             && (filterSets.rarities.size === 0 || filterSets.rarities.has(coordinate.rarity))
+            && (filterSets.buzzTypes.size === 0 || filterSets.buzzTypes.has(coordinate.buzzType))
             && (filterSets.brands.size === 0 || filterSets.brands.has(coordinate.brandName))
         })
     }
@@ -45,6 +48,7 @@
         return unlistedcoordinateData.filter(coordinate => {
             return (filterSets.categories.size === 0 || filterSets.categories.has(coordinate.connectedCategory))
             && (filterSets.rarities.size === 0 || filterSets.rarities.has(coordinate.rarity))
+            && (filterSets.buzzTypes.size === 0 || filterSets.buzzTypes.has(coordinate.buzzType))
             && (filterSets.brands.size === 0 || filterSets.brands.has(coordinate.brandName))
         })
     }
@@ -56,6 +60,11 @@
     function getImageId(targetId: string) {
         const retsult = itemData.find(({ manageId }) => manageId == targetId);
         if (retsult != undefined) return retsult.imageId;
+        return null;
+    }
+    function getBuzzType(targetId: string) {
+        const retsult = itemData.find(({ manageId }) => manageId == targetId);
+        if (retsult != undefined) return retsult.buzzType;
         return null;
     }
     function isSameCategory(targetId: string, url: string, category: string) {
@@ -187,6 +196,34 @@
                 <button
                     class={{
                         "p-1": true,
+                        "bg-[#ffff00]": filterSets.buzzTypes.size > 0
+                    }}
+                    onclick={() => {
+                        isOpenFilterBuzzType = !isOpenFilterBuzzType;
+                    }}
+                >{isOpenFilterBuzzType ? "▲" : "▼"} バズリウムタイプ選択</button>
+                {#if isOpenFilterBuzzType}
+                    <div class="flex flex-wrap justify-start content-start">
+                        {#each buzzTypeList as buzzType}
+                            <button
+                                class={{
+                                    "m-1 px-2 py-1 h-max border-3 border-[#66d9fe] rounded-full bg-white": true,
+                                    "!bg-[#ffff00]": filterSets.buzzTypes.has(buzzType)
+                                }}
+                                onclick={() => {
+                                    filterSets.buzzTypes.has(buzzType) ? filterSets.buzzTypes.delete(buzzType) : filterSets.buzzTypes.add(buzzType);
+                                    coordinateDataShow = filter();
+                                    unlistedcoordinateDataShow = unlistedCoordinateDataFilter();
+                                }}
+                            >{buzzType}</button>
+                        {/each}
+                    </div>
+                {/if}
+            </div>
+            <div>
+                <button
+                    class={{
+                        "p-1": true,
                         "bg-[#ffff00]": filterSets.brands.size > 0
                     }}
                     onclick={() => {
@@ -229,10 +266,14 @@
                         {@const manageId = coordinate[part].split(" ")[0]}
                         {@const printedId = getPrintedId(manageId)}
                         {@const imageId = getImageId(manageId)}
+                        {@const buzzType = getBuzzType(manageId)}
                             <div>
                                 <div class="relative">
-                                    <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                    <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1 aspect-square">
                                     <img src="{base}/img/{part}.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                                    {#if buzzType != null}
+                                    <img src="{base}/img/{buzzType}.jpg" alt="" class="absolute bottom-1 left-1 w-1/4">
+                                    {/if}
                                 </div>
                                 {#if printedId != null}
                                 <div class="text-xs">{printedId} <span class=" text-[#aaa]">({manageId})</span></div>
@@ -306,8 +347,11 @@
                         {@const imageId = manageId}
                             <div>
                                 <div class="relative">
-                                    <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1">
+                                    <img src="{base}/img/item/{imageId}_150.webp" alt="" class="size-full p-1 aspect-square">
                                     <img src="{base}/img/{part}.png" alt="" class="absolute top-1 left-1 w-1/4 opacity-30">
+                                    {#if coordinate.buzzType != null && (part == "tops" || part == "one-piece")}
+                                    <img src="{base}/img/{coordinate.buzzType}.jpg" alt="" class="absolute bottom-1 left-1 w-1/4">
+                                    {/if}
                                 </div>
                                 {#if printedId != null}
                                 <div class="text-xs">{printedId} <span class=" text-[#aaa]">({manageId})</span></div>
