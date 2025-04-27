@@ -6,6 +6,9 @@
     import musicData from "$lib/assets/music_data.json";
     import { cardInventoryStore } from "$lib/stores";
     import type { CardInventory } from "$lib/types";
+    import { onMount, onDestroy } from "svelte";
+
+    const cardsPerPage = 24;
 
     let cardInventoryShow: CardInventory = $state({});
     cardInventoryStore.subscribe((value) => {
@@ -20,7 +23,6 @@
     }
 
     let isShowFront = $state(true);
-    let cardDataShow = $state(cardData);
     let filterSets = $state({
         categories: new SvelteSet(),
         chance: new SvelteSet(),
@@ -30,6 +32,30 @@
         brands: new SvelteSet(),
         musics: new SvelteSet()
     });
+    let filteredCardData = $derived(filter(filterSets));
+    let pageCount = $state(0);
+    let cardDataShow = $derived(filteredCardData.slice(0, (pageCount + 1) * cardsPerPage) ?? []);
+    let isCardRemaining = $derived(((filteredCardData.length / cardsPerPage) - pageCount > 0));
+
+    let anchorElement: HTMLDivElement;
+    const observer = new IntersectionObserver(
+        (entries) => {
+            if(entries[0].isIntersecting && isCardRemaining) {
+                pageCount++;
+            }
+        }, {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.1
+        }
+    );
+    onMount(() => {
+        observer.observe(anchorElement);
+    });
+    onDestroy(() => {
+        observer.disconnect();
+    })
+
     let isOpenFilterCategory = $state(false);
     let isOpenFilterChance = $state(false);
     let isOpenFilterBuzzType = $state(false);
@@ -37,21 +63,21 @@
     let isOpenFilterCharacter = $state(false);
     let isOpenFilterBrand = $state(false);
     let isOpenFilterMusic = $state(false);
-    function filter() {
+    function filter(condition: typeof filterSets) {
         return cardData.filter(card => {
-            return (filterSets.categories.size === 0 || filterSets.categories.has(card.connectedCategory))
-            && (filterSets.chance.size === 0 || filterSets.chance.has(card.chance))
-            && (filterSets.buzzTypes.size === 0 || filterSets.buzzTypes.has(card.buzzType))
-            && (filterSets.types.size === 0 || filterSets.types.has(card.type))
-            && (filterSets.characters.size === 0 || filterSets.characters.has(card.character))
-            && (filterSets.brands.size === 0 || filterSets.brands.has(card.brandName))
-            && (filterSets.musics.size === 0 || filterSets.musics.has(card.music))
+            return (condition.categories.size === 0 || condition.categories.has(card.connectedCategory))
+            && (condition.chance.size === 0 || condition.chance.has(card.chance))
+            && (condition.buzzTypes.size === 0 || condition.buzzTypes.has(card.buzzType))
+            && (condition.types.size === 0 || condition.types.has(card.type))
+            && (condition.characters.size === 0 || condition.characters.has(card.character))
+            && (condition.brands.size === 0 || condition.brands.has(card.brandName))
+            && (condition.musics.size === 0 || condition.musics.has(card.music))
         })
     }
 </script>
 <main class="grow mt-15 p-2.5">
     <div class="flex flex-col flex-wrap gap-2 fixed top-18 z-10 p-2.5 w-max bg-white/90 rounded-xl">
-        <div>現在 <span class="font-bold">{cardDataShow.length}</span> 枚のカードを表示しています</div>
+        <div>現在 <span class="font-bold">{filteredCardData.length}</span> 枚のカードを表示しています</div>
         <button
             class="flex items-center justify-center px-2 w-max bg-white border-1 rounded-full"
             onclick={() => {
@@ -92,7 +118,6 @@
                                             })
                                             selectedCategoryNum[index] = url.categories.length;
                                         }
-                                        cardDataShow = filter();
                                     }}
                                 >{toUrlString(url.url)} <span class="text-gray-400">({selectedCategoryNum[index]}/{url.categories.length})</span></button>
                                 <button
@@ -129,7 +154,6 @@
                                                         filterSets.categories.add(value);
                                                         selectedCategoryNum[index]++;
                                                     }
-                                                    cardDataShow = filter();
                                                 }}
                                             >{category}</button>
                                         {/each}
@@ -162,7 +186,6 @@
                                 }}
                                 onclick={() => {
                                     filterSets.chance.has(chance.tf) ? filterSets.chance.delete(chance.tf) : filterSets.chance.add(chance.tf);
-                                    cardDataShow = filter();
                                 }}
                             >{chance.str}</button>
                         {/each}
@@ -189,7 +212,6 @@
                                 }}
                                 onclick={() => {
                                     filterSets.buzzTypes.has(buzzType) ? filterSets.buzzTypes.delete(buzzType) : filterSets.buzzTypes.add(buzzType);
-                                    cardDataShow = filter();
                                 }}
                             >{buzzType}</button>
                         {/each}
@@ -216,7 +238,6 @@
                                 }}
                                 onclick={() => {
                                     filterSets.types.has(type) ? filterSets.types.delete(type) : filterSets.types.add(type);
-                                    cardDataShow = filter();
                                 }}
                             >{type}</button>
                         {/each}
@@ -243,7 +264,6 @@
                                 }}
                                 onclick={() => {
                                     filterSets.characters.has(character) ? filterSets.characters.delete(character) : filterSets.characters.add(character);
-                                    cardDataShow = filter();
                                 }}
                             >{character}</button>
                         {/each}
@@ -270,7 +290,6 @@
                                 }}
                                 onclick={() => {
                                     filterSets.brands.has(brand) ? filterSets.brands.delete(brand) : filterSets.brands.add(brand);
-                                    cardDataShow = filter();
                                 }}
                             ><img src="{base}/img/brand/{brand}.webp" alt="{brand}" title="{brand}" class="w-full h-10 object-cover"></button>
                         {/each}
@@ -300,7 +319,6 @@
                                 }}
                                 onclick={() => {
                                     filterSets.musics.has(musicName) ? filterSets.musics.delete(musicName) : filterSets.musics.add(musicName);
-                                    cardDataShow = filter();
                                 }}
                                 ><img src="{base}/img/jacket/jacket_{jacketId}.webp" alt="{musicName}" class="p-1 aspect-square"></button>
                         {/each}
@@ -396,4 +414,5 @@
             </div>
         {/each}
     </div>
+    <div id="cardAnchor" bind:this={anchorElement} class="text-center"><span class="mdi--clover rotate-45 text-green-600"></span></div>
 </main>
